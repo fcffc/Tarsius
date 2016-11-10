@@ -3,12 +3,13 @@ package br.jus.tjmt.tarsius.dao;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-
-import br.jus.tjmt.tarsius.util.HibernateUtil;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+
+import br.jus.tjmt.tarsius.util.HibernateUtil;
 
 public class GenericDAO<Entidade> {
 	// API reflection : Pega qual é o tipo da classe filha
@@ -43,6 +44,7 @@ public class GenericDAO<Entidade> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Entidade> listar() {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
@@ -56,6 +58,7 @@ public class GenericDAO<Entidade> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public Entidade buscar(Long codigo) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
@@ -68,6 +71,29 @@ public class GenericDAO<Entidade> {
 		} catch (RuntimeException erro) {
 			throw erro;
 		} finally {
+			sessao.close();
+		}
+	}
+
+	public void excluir(Entidade entidade) {
+		// Capturar uma sessão aberta
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		// Declarar um objeto p/ controlar as transações
+		Transaction transacao = null;
+		try {
+			// Abre e deleta a transação
+			transacao = sessao.beginTransaction();
+			sessao.delete(entidade);
+			transacao.commit();
+		} catch (RuntimeException erro) {
+			// Verifica se a transação foi aberta
+			if (transacao != null) {
+				transacao.rollback();
+			}
+			throw erro;
+		}
+		// Se der certo ou errado finaliza a sessão
+		finally {
 			sessao.close();
 		}
 	}
@@ -114,6 +140,21 @@ public class GenericDAO<Entidade> {
 		}
 		// Se der certo ou errado finaliza a sessão
 		finally {
+			sessao.close();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Entidade> listar(String campoOrdenacao) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(classe);
+			consulta.addOrder(Order.asc(campoOrdenacao));
+			List<Entidade> resultado = consulta.list();
+			return resultado;
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
 			sessao.close();
 		}
 	}
