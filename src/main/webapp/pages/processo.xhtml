@@ -17,10 +17,21 @@
 
 	<h:form id="formListagem">
 		<p:panel styleClass="painel" header="Processos - Listagem">
+			<div style="position: relative; top:-5px; display: inline-block; ">
+				<h:panelGrid columns="2"
+					columnClasses="ui-grid-col-2,ui-grid-col-20" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:inputText id="search" value="#{cursorProcesso.nome}" />
+					<p:commandButton actionListener="#{processoBean.listar}"
+						value="Pesquisar" process="@parent" icon="ui-icon-refresh"
+						oncomplete="PF('dialogo').clearFilters()" />
+				</h:panelGrid>
+			</div>
 			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{processoBean.processos}"
 				var="cursorProcesso" rows="10">
-				<f:facet name="header">
+				<f:facet name="footer">
+
 					<!-- Botão Novo -->
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{processoBean.novo}"
