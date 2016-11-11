@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -55,11 +56,40 @@ public class NomenclaturaBean implements Serializable {
 	public void salvar() {
 		try {
 			NomenclaturaDAO nomenclaturaDAO = new NomenclaturaDAO();
-			nomenclaturaDAO.salvar(nomenclatura);
+			nomenclaturaDAO.merge(nomenclatura);
+			// Reinstancia o Nomenclatura
 			novo(); // Limpa a tela após inserção dos dados
+			// Recarrega a listagem de Nomenclatura
+			nomenclaturas = nomenclaturaDAO.listar();
 			Messages.addGlobalInfo("Nomenclatura salva com sucesso.");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Falha ao tentar salvar a Namenclatura.");
+			erro.printStackTrace();
+		}
+	}
+
+	public void excluir(ActionEvent evento) {
+		try {
+			// Seleciona a Nomenclatura a ser excluído
+			nomenclatura = (Nomenclatura) evento.getComponent().getAttributes().get("nomenclaturaSelecionada");
+			// Exclui a namonclatura
+			NomenclaturaDAO nomenclaturaDAO = new NomenclaturaDAO();
+			nomenclaturaDAO.excluir(nomenclatura);
+			// Recarrega a listagem de nomenclatura
+			nomenclaturas = nomenclaturaDAO.listar("sigla");
+			Messages.addGlobalInfo("Nomenclatura: " + nomenclatura.getSigla() + " excluída com sucesso.");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Falha ao excluir Nomenclatura.");
+			erro.printStackTrace();
+		}
+	}
+
+	public void editar(ActionEvent evento) {
+		try {
+			// Seleciona a nomenclatura a ser editada
+			nomenclatura = (Nomenclatura) evento.getComponent().getAttributes().get("nomenclaturaSelecionada");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Falha ao carregar tela de edição.");
 			erro.printStackTrace();
 		}
 	}

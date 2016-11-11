@@ -86,7 +86,7 @@ public class CargoBean implements Serializable {
 
 	public void editar(ActionEvent evento) {
 		try {
-			// Seleciona o estado a ser editado
+			// Seleciona o Cargo a ser editado
 			cargo = (Cargo) evento.getComponent().getAttributes().get("cargoSelecionado");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Falha ao carregar tela de edição.");

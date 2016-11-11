@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -55,11 +56,40 @@ public class TipoArtefatoBean implements Serializable {
 	public void salvar() {
 		try {
 			TipoArtefatoDAO tipoArtefatoDAO = new TipoArtefatoDAO();
-			tipoArtefatoDAO.salvar(tipoArtefato);
+			tipoArtefatoDAO.merge(tipoArtefato);
+			// Reinstancia o tipoArtefato
 			novo(); // Limpa a tela após inserção dos dados
+			// Recarrega a listagem de tipo de artefato
+			tipoArtefatos = tipoArtefatoDAO.listar();
 			Messages.addGlobalInfo("Tipo de artefato salvo com sucesso.");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Falha ao tentar salvar o tipo de artefato.");
+			erro.printStackTrace();
+		}
+	}
+
+	public void excluir(ActionEvent evento) {
+		try {
+			// Seleciona o cargo a ser excluído
+			tipoArtefato = (TipoArtefato) evento.getComponent().getAttributes().get("tipoArtefatoSelecionado");
+			// Exclui tipoArtefato
+			TipoArtefatoDAO tipoArtefatoDAO = new TipoArtefatoDAO();
+			tipoArtefatoDAO.excluir(tipoArtefato);
+			// Recarrega a listagem de tipoArtefato
+			tipoArtefatos = tipoArtefatoDAO.listar("sigla");
+			Messages.addGlobalInfo("Tipo Artefato: " + tipoArtefato.getSigla() + " excluído com sucesso.");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Falha ao excluir tipo de artefato.");
+			erro.printStackTrace();
+		}
+	}
+
+	public void editar(ActionEvent evento) {
+		try {
+			// Seleciona o tipoArtefato a ser editado
+			tipoArtefato = (TipoArtefato) evento.getComponent().getAttributes().get("tipoArtefatoSelecionado");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Falha ao carregar tela de edição.");
 			erro.printStackTrace();
 		}
 	}

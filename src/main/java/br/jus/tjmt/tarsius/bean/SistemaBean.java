@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -55,11 +56,40 @@ public class SistemaBean implements Serializable {
 	public void salvar() {
 		try {
 			SistemaDAO sistemaDAO = new SistemaDAO();
-			sistemaDAO.salvar(sistema);
+			sistemaDAO.merge(sistema);
+			// Reinstancia o Sistema
 			novo(); // Limpa a tela após inserção dos dados
+			// Recarrega a listagem de Sistema
+			sistemas = sistemaDAO.listar();
 			Messages.addGlobalInfo("Sistema salvo com sucesso.");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Falha ao tentar salvar o Sistema.");
+			erro.printStackTrace();
+		}
+	}
+
+	public void excluir(ActionEvent evento) {
+		try {
+			// Seleciona o sistema a ser excluído
+			sistema = (Sistema) evento.getComponent().getAttributes().get("sistemaSelecionado");
+			// Exclui o sistema
+			SistemaDAO sistemaDAO = new SistemaDAO();
+			sistemaDAO.excluir(sistema);
+			// Recarrega a listagem de Sistema
+			sistemas = sistemaDAO.listar("sigla");
+			Messages.addGlobalInfo("Sistema: " + sistema.getSigla() + "excluído com sucesso.");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Falha ao excluir Sistema.");
+			erro.printStackTrace();
+		}
+	}
+
+	public void editar(ActionEvent evento) {
+		try {
+			// Seleciona o Sistema a ser editado
+			sistema = (Sistema) evento.getComponent().getAttributes().get("sistemaSelecionado");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Falha ao carregar tela de edição.");
 			erro.printStackTrace();
 		}
 	}

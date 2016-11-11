@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -55,11 +56,40 @@ public class ProcessoBean implements Serializable {
 	public void salvar() {
 		try {
 			ProcessoDAO processoDAO = new ProcessoDAO();
-			processoDAO.salvar(processo);
-			novo();
+			processoDAO.merge(processo);
+			// Reinstancia o Processo
+			novo(); // Limpa a tela após inserção dos dados
+			// Recarrega a listagem de Processo
+			processos = processoDAO.listar();
 			Messages.addGlobalInfo("Processo salvo com sucesso.");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Falha ao tentar salvar o Processo.");
+			erro.printStackTrace();
+		}
+	}
+
+	public void excluir(ActionEvent evento) {
+		try {
+			// Seleciona o processo a ser excluído
+			processo = (Processo) evento.getComponent().getAttributes().get("processoSelecionado");
+			// Exclui o processo
+			ProcessoDAO processoDAO = new ProcessoDAO();
+			processoDAO.excluir(processo);
+			// Recarrega a listagem de processo
+			processos = processoDAO.listar("nome");
+			Messages.addGlobalInfo("Processo: " + processo.getNome() + " excluído com sucesso.");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Falha ao excluir Processo.");
+			erro.printStackTrace();
+		}
+	}
+
+	public void editar(ActionEvent evento) {
+		try {
+			// Seleciona o Processo a ser editado
+			processo = (Processo) evento.getComponent().getAttributes().get("processoSelecionado");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Falha ao carregar tela de edição.");
 			erro.printStackTrace();
 		}
 	}

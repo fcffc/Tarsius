@@ -86,7 +86,7 @@ public class CompetenciaInspecaoBean implements Serializable {
 	
 	public void editar(ActionEvent evento){
 		try{
-			// Seleciona o estado a ser editado
+			// Seleciona a competencia a ser editada
 			competenciaInspecao = (CompetenciaInspecao) evento.getComponent().getAttributes().get("competenciaInspecaoSelecionada");
 		}catch(RuntimeException erro){
 			Messages.addFlashGlobalError("Falha ao carregar tela de edição.");
