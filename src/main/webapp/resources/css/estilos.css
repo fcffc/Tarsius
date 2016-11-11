@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+
+.imagemCentralizada {
+	max-width: 100%;
+	height: auto;
+}
+
+.corFundo {
+	background-color: #FFF;
+}
+
+.painel {
+	margin-left: 210px;
+	margin-right: auto;
+	margin-top: 0px;
+	max-width: 200px;
+	min-width: 1120px;
+}

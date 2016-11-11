@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Tarsius</title>
+	<h:outputStylesheet library="css" name="estilos.css" />
+</h:head>
+<h:body styleClass="corFundo">
+	<p:panel>
+	<p:growl id="mensagem" />
+	
+	<div id="geral">
+		<div id="topo">
+			<p:graphicImage library="images" name="banner.png"
+				styleClass="imagemCentralizada" />
+		</div>
+		<p:panel>
+		<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank">
+		<div id="cabecalho">
+			<h:form id="formMenu">
+				<p:growl autoUpdate="true" />
+
+
+				<p:panelMenu style="width:200px">
+					<p:submenu label="Inicial"></p:submenu>
+					<p:separator />
+					<p:submenu label="Gerenciar">
+						<p:menuitem value="Aplicação" icon="ui-icon-disk" />
+						<p:menuitem value="Cargo" icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="Checklist" icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="Comp. Inspeção" icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="Fluxo" icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="Processo" icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="Gestor" icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="Pessoa" icon="ui-icon-arrowrefresh-1-w" />
+					</p:submenu>
+					<p:submenu label="Inspeção">
+						<p:menuitem value="Acompanhamento" icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="Execução" icon="ui-icon-arrowrefresh-1-w" />
+					</p:submenu>
+					<p:separator />
+					<p:submenu label="Evidência">
+						<p:menuitem value="Artefatos" url="http://www.primefaces.org"
+							icon="ui-icon-home" />
+						<p:menuitem value="Funcionalidade"
+							url="http://www.primefaces.org/documentation"
+							icon="ui-icon-document" />
+					</p:submenu>
+					<p:separator />
+					<p:submenu label="Relatórios"></p:submenu>
+					<p:separator />
+					<p:separator />
+					<p:submenu label="Configuração">
+						<p:menuitem value="Board" url="http://www.primefaces.org"
+							icon="ui-icon-home" />
+						<p:menuitem value="Nomenclatura"
+							url="http://www.primefaces.org/documentation"
+							icon="ui-icon-document" />
+						<p:menuitem value="Notificação"
+							url="http://www.primefaces.org/documentation"
+							icon="ui-icon-document" />
+						<p:menuitem value="Tipo Artefato"
+							url="http://www.primefaces.org/documentation"
+							icon="ui-icon-document" />
+						<p:menuitem value="Usuário"
+							url="http://www.primefaces.org/documentation"
+							icon="ui-icon-document" />
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+		</div>
+		<p:panel id="conteudo">
+				<ui:insert name="conteudo" />
+		
+		</p:panel>
+		</p:panelGrid>
+		</p:panel>
+	</div>
+</p:panel>
+</h:body>
+</html>
