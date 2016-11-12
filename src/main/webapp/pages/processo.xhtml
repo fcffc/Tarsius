@@ -1,110 +1,106 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
 
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Processos</title>
-</h:head>
-<h:body>
 	<p:growl id="mensagem" />
 
 	<!-- Listagem de registros e ações -->
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel >
+				<p:breadCrumb>
+					<p:menuitem style="" value="Categories" url="#" />
+					<p:menuitem title="Gerenciar Processos"
+						value="Listagem - Processos" url="#" />
+				</p:breadCrumb>
+				
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{processoBean.processos}"
+					var="cursorProcesso" rows="10" style="margin-top:5px">
+					<f:facet name="footer" >
 
-	<h:form id="formListagem">
-		<p:panel styleClass="painel" header="Processos - Listagem">
-			<div style="position: relative; top:-5px; display: inline-block; ">
-				<h:panelGrid columns="2"
-					columnClasses="ui-grid-col-2,ui-grid-col-20" layout="grid"
-					styleClass="ui-panelgrid-blank">
-					<p:inputText id="search" value="#{cursorProcesso.nome}" />
-					<p:commandButton actionListener="#{processoBean.listar}"
-						value="Pesquisar" process="@parent" icon="ui-icon-refresh"
-						oncomplete="PF('dialogo').clearFilters()" />
-				</h:panelGrid>
-			</div>
-			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-				paginator="true" value="#{processoBean.processos}"
-				var="cursorProcesso" rows="10">
-				<f:facet name="footer">
+						<!-- Botão Novo -->
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{processoBean.novo}"
+							update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+					<p:column headerText="Nome" sortBy="#{cursorProcesso.nome}">
+						<h:outputText value="#{cursorProcesso.nome}" />
 
-					<!-- Botão Novo -->
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{processoBean.novo}"
-						update=":formCadastro:painel">
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
-				</f:facet>
-				<p:column headerText="Nome" sortBy="#{cursorProcesso.nome}"
-					filterBy="#{cursorProcesso.nome}">
-				</p:column>
-				<p:column headerText="Observação"
-					sortBy="#{cursorProcesso.observacao}">
-					<h:outputText value="#{cursorProcesso.observacao}" />
-				</p:column>
+					</p:column>
+					<p:column headerText="Observação"
+						sortBy="#{cursorProcesso.observacao}">
+						<h:outputText value="#{cursorProcesso.observacao}" />
+					</p:column>
 
-				<p:column headerText="Opções">
+					<p:column headerText="Ações">
 
-					<!-- Botão Excluir -->
-					<p:commandButton icon="ui-icon-trash"
-						actionListener="#{processoBean.excluir}"
-						update=":mensagem :formListagem:tabela">
-						<p:confirm header="Confirmação" message="Deseja excluir o estado?"
-							icon="ui-icon-alert" />
-						<f:attribute name="processoSelecionado" value="#{cursorProcesso}" />
-					</p:commandButton>
+						<!-- Botão Excluir -->
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{processoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o Processo?" icon="ui-icon-alert" />
+							<f:attribute name="processoSelecionado" value="#{cursorProcesso}" />
+						</p:commandButton>
 
-					<!-- Botão Editar -->
-					<p:commandButton icon="ui-icon-pencil"
-						actionListener="#{processoBean.editar}"
-						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
-						<f:attribute name="processoSelecionado" value="#{cursorProcesso}" />
-						<!-- Reseta as mensagens de validação -->
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
-				</p:column>
-			</p:dataTable>
+						<!-- Botão Editar -->
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{processoBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="processoSelecionado" value="#{cursorProcesso}" />
+							<!-- Reseta as mensagens de validação -->
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
 
-			<!-- Caixa de confirmação -->
-			<p:confirmDialog global="true">
-				<p:commandButton value="Sim" type="button"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="Não" type="button"
-					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			</p:confirmDialog>
-		</p:panel>
-	</h:form>
-
-	<!-- Campo de Cadastro -->
-	<p:dialog header="Processos - Cadastro" widgetVar="dialogo"
-		draggable="false" resizable="false" modal="true">
-		<h:form id="formCadastro">
-			<h:panelGrid id="painel" columns="2">
-				<p:outputLabel for="nome" value="Nome: " />
-				<p:inputText id="nome" maxlength="100" size="40"
-					value="#{processoBean.processo.nome}" required="true"
-					requiredMessage="O campo 'Nome' é obrigatório." />
-				<p:outputLabel for="observacao" value="Observação " />
-				<p:inputText id="observacao" maxlength="100" size="50"
-					value="#{processoBean.processo.observacao}" required="false" />
-			</h:panelGrid>
-
-			<h:panelGrid columns="4">
-				<!-- Botão salvar -->
-				<p:commandButton value="Salvar"
-					actionListener="#{processoBean.salvar}"
-					update=":mensagem :formCadastro:painel :formListagem:tabela" />
-
-				<!-- Botão Cancelar -->
-				<p:commandButton value="Cancelar" oncomplete="PF('dialogo').hide();" />
-			</h:panelGrid>
+				<!-- Caixa de confirmação -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
 		</h:form>
-	</p:dialog>
-</h:body>
-</html>
+
+		<!-- Campo de Cadastro -->
+		<p:dialog header="Processos - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="nome" value="Nome: " />
+					<p:inputText id="nome" maxlength="100" size="40"
+						value="#{processoBean.processo.nome}" required="true"
+						requiredMessage="O campo 'Nome' é obrigatório." />
+
+					<p:outputLabel for="observacao" value="Observação: " />
+					<p:inputTextarea id="observacao" maxlength="100"
+						style="width: 356px; resize: none;"
+						value="#{processoBean.processo.observacao}" required="false" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="4">
+					<!-- Botão salvar -->
+					<p:commandButton value="Salvar"
+						actionListener="#{processoBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+
+					<!-- Botão Cancelar -->
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
