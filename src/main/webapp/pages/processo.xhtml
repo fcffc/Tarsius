@@ -12,20 +12,21 @@
 	<!-- Listagem de registros e ações -->
 	<ui:define name="conteudo">
 		<h:form id="formListagem">
-			<p:panel >
+			<p:panel>
 				<p:breadCrumb>
 					<p:menuitem style="" value="Categories" url="#" />
 					<p:menuitem title="Gerenciar Processos"
 						value="Listagem - Processos" url="#" />
 				</p:breadCrumb>
-				
+
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{processoBean.processos}"
 					var="cursorProcesso" rows="10" style="margin-top:5px">
-					<f:facet name="footer" >
+					<f:facet name="footer">
 
 						<!-- Botão Novo -->
-						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						<p:commandButton value="Novo" type=""
+							oncomplete="PF('dialogo').show();"
 							actionListener="#{processoBean.novo}"
 							update=":formCadastro:painel">
 							<f:actionListener
@@ -76,7 +77,7 @@
 
 		<!-- Campo de Cadastro -->
 		<p:dialog header="Processos - Cadastro" widgetVar="dialogo"
-			draggable="false" resizable="false" modal="true">
+			draggable="true" resizable="true" modal="true">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel for="nome" value="Nome: " />
@@ -98,7 +99,11 @@
 
 					<!-- Botão Cancelar -->
 					<p:commandButton value="Cancelar"
-						oncomplete="PF('dialogo').hide();" />
+						oncomplete="PF('dialogo').hide();">
+						<!-- Reseta as mensagens de validação -->
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
