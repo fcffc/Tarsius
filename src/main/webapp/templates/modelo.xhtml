@@ -5,82 +5,88 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:fa="http://primefaces.org/fa"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Tarsius</title>
 	<h:outputStylesheet library="css" name="estilos.css" />
+	<h:outputStylesheet library="css" name="font-awesome.css" />
 </h:head>
 <h:body styleClass="corFundo">
 	<p:panel>
-	<p:growl id="mensagem" />
-	
-	<div id="geral">
-		<div id="topo">
-			<p:graphicImage library="images" name="banner.png"
-				styleClass="imagemCentralizada" />
-		</div>
-		<p:panel>
-		<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-30" layout="grid" styleClass="ui-panelgrid-blank">
-		<div id="cabecalho">
-			<h:form id="formMenu">
-				<p:growl autoUpdate="true" />
+		<p:growl id="mensagem" />
+
+		<div id="geral">
+			<div id="topo">
+				<p:graphicImage library="images" name="banner.png"
+					styleClass="imagemCentralizada" />
+			</div>
+			<p:panel>
+				<p:panelGrid columns="2"
+					columnClasses="ui-grid-col-2,ui-grid-col-30" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<div id="cabecalho">
+						<h:form id="formMenu">
+							<p:growl autoUpdate="true" />
 
 
-				<p:panelMenu style="width:auto; min-width: 160px;">
-					<p:submenu label="Inicial"></p:submenu>
-					<p:separator />
-					<p:submenu label="Gerenciar">
-						<p:menuitem value="Aplicação" icon="ui-icon-disk" />
-						<p:menuitem value="Cargo" icon="ui-icon-arrowrefresh-1-w" />
-						<p:menuitem value="Checklist" icon="ui-icon-arrowrefresh-1-w" />
-						<p:menuitem value="Comp. Inspeção" icon="ui-icon-arrowrefresh-1-w" />
-						<p:menuitem value="Fluxo" icon="ui-icon-arrowrefresh-1-w" />
-						<p:menuitem value="Processo" icon="ui-icon-arrowrefresh-1-w" />
-						<p:menuitem value="Gestor" icon="ui-icon-arrowrefresh-1-w" />
-						<p:menuitem value="Pessoa" icon="ui-icon-arrowrefresh-1-w" />
-					</p:submenu>
-					<p:submenu label="Inspeção">
-						<p:menuitem value="Acompanhamento" icon="ui-icon-arrowrefresh-1-w" />
-						<p:menuitem value="Execução" icon="ui-icon-arrowrefresh-1-w" />
-					</p:submenu>
-					<p:separator />
-					<p:submenu label="Evidência">
-						<p:menuitem value="Artefatos" url="http://www.primefaces.org"
-							icon="ui-icon-home" />
-						<p:menuitem value="Funcionalidade"
-							url="http://www.primefaces.org/documentation"
-							icon="ui-icon-document" />
-					</p:submenu>
-					<p:separator />
-					<p:submenu label="Relatórios"></p:submenu>
-					<p:separator />
-					<p:separator />
-					<p:submenu label="Configuração">
-						<p:menuitem value="Board" url="http://www.primefaces.org"
-							icon="ui-icon-home" />
-						<p:menuitem value="Nomenclatura"
-							url="http://www.primefaces.org/documentation"
-							icon="ui-icon-document" />
-						<p:menuitem value="Notificação"
-							url="http://www.primefaces.org/documentation"
-							icon="ui-icon-document" />
-						<p:menuitem value="Tipo Artefato"
-							url="http://www.primefaces.org/documentation"
-							icon="ui-icon-document" />
-						<p:menuitem value="Usuário"
-							url="http://www.primefaces.org/documentation"
-							icon="ui-icon-document" />
-					</p:submenu>
-				</p:panelMenu>
-			</h:form>
+							<p:panelMenu style="width:auto; min-width: 160px;">
+								<p:submenu label="Inicial"  ></p:submenu>
+								<p:separator />
+								<p:submenu label="Gerenciar">
+									<p:menuitem value="Aplicação" icon="fa fa-desktop" />
+									<p:menuitem value="Cargo" icon="ui-icon-arrowrefresh-1-w" />
+									<p:menuitem value="Checklist" icon="ui-icon-arrowrefresh-1-w" />
+									<p:menuitem value="Comp. Inspeção"
+										icon="ui-icon-arrowrefresh-1-w" />
+									<p:menuitem value="Fluxo" icon="ui-icon-arrowrefresh-1-w" />
+									<p:menuitem value="Processo" icon="ui-icon-arrowrefresh-1-w" />
+									<p:menuitem value="Gestor" icon="ui-icon-arrowrefresh-1-w" />
+									<p:menuitem value="Pessoa" icon="ui-icon-arrowrefresh-1-w" />
+								</p:submenu>
+								<p:submenu label="Inspeção">
+									<p:menuitem value="Acompanhamento"
+										icon="ui-icon-arrowrefresh-1-w" />
+									<p:menuitem value="Execução" icon="ui-icon-arrowrefresh-1-w" />
+								</p:submenu>
+								<p:separator />
+								<p:submenu label="Evidência">
+									<p:menuitem value="Artefatos" url="http://www.primefaces.org"
+										icon="ui-icon-home" />
+									<p:menuitem value="Funcionalidade"
+										url="http://www.primefaces.org/documentation"
+										icon="ui-icon-document" />
+								</p:submenu>
+								<p:separator />
+								<p:submenu label="Relatórios"></p:submenu>
+								<p:separator />
+								<p:separator />
+								<p:submenu label="Configuração">
+									<p:menuitem value="Board" url="http://www.primefaces.org"
+										icon="ui-icon-home" />
+									<p:menuitem value="Nomenclatura"
+										url="http://www.primefaces.org/documentation"
+										icon="ui-icon-document" />
+									<p:menuitem value="Notificação"
+										url="http://www.primefaces.org/documentation"
+										icon="ui-icon-document" />
+									<p:menuitem value="Tipo Artefato"
+										url="http://www.primefaces.org/documentation"
+										icon="ui-icon-document" />
+									<p:menuitem value="Usuário"
+										url="http://www.primefaces.org/documentation"
+										icon="ui-icon-document" />
+								</p:submenu>
+							</p:panelMenu>
+						</h:form>
+					</div>
+					<div id="conteudo">
+						<ui:insert name="conteudo" />
+					</div>
+				</p:panelGrid>
+			</p:panel>
 		</div>
-		<div id="conteudo">
-			<ui:insert name="conteudo" />		
-		</div>
-		</p:panelGrid>
-		</p:panel>
-	</div>
-</p:panel>
+	</p:panel>
 </h:body>
 </html>
