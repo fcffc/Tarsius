@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<!-- Listagem de registros e ações. -->
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel>
+				<p:breadCrumb>
+					<p:menuitem style="" value="Categories" url="#" />
+					<p:menuitem title="Gerenciar Fluxos" value="Listagem - Fluxos"
+						url="fluxo.xhtml" />
+				</p:breadCrumb>
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{fluxoBean.fluxos}" var="cursorFluxo"
+					rows="10" style="margin-top:5px">
+					<f:facet name="footer">
+
+						<!-- Botão Novo -->
+						<p:commandButton value="Novo" type=""
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{fluxoBean.novo}" update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+					<p:column headerText="Nome" sortBy="#{cursorFluxo.nome}">
+						<h:outputText value="#{cursorFluxo.nome}" />
+					</p:column>
+
+					<p:column headerText="Processo"
+						sortBy="#{cursorFluxo.processo.nome}">
+						<h:outputText value="#{cursorFluxo.processo.nome}" />
+
+					</p:column>
+					<p:column headerText="Observação">
+						<h:outputText value="#{cursorFluxo.observacao}" />
+					</p:column>
+
+					<p:column headerText="Ações">
+
+						<!-- Botão Excluir -->
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{fluxoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação" message="Deseja excluir o Fluxo?"
+								icon="ui-icon-alert" />
+							<f:attribute name="fluxoSelecionado" value="#{cursorFluxo}" />
+						</p:commandButton>
+
+						<!-- Botão Editar -->
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{fluxoBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="fluxoSelecionado" value="#{cursorFluxo}" />
+							<!-- Reseta as mensagens de validação -->
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<!-- Caixa de confirmação -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<!-- Campo de Cadastro -->
+		<p:dialog header="Fluxos - Cadastro" widgetVar="dialogo"
+			draggable="true" resizable="true" modal="true">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="nome" value="Nome: " />
+					<p:inputText id="nome" maxlength="100" size="40"
+						value="#{fluxoBean.fluxo.nome}" required="true"
+						requiredMessage="O campo 'Nome' é obrigatório." />
+
+					<p:outputLabel for="processo" value="Processo: "  />
+					<p:selectOneMenu value="#{fluxoBean.fluxo.processo.codigo}" filter="true" >
+						<f:selectItem itemValue="#{fluxoBean.processos}" itemLabel="Selecione um Processo" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="observacao" value="Observação: " />
+					<p:inputTextarea id="observacao" maxlength="100"
+						style="width: 356px; resize: none;"
+						value="#{fluxoBean.fluxo.observacao}" required="false" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="4">
+					<!-- Botão salvar -->
+					<p:commandButton value="Salvar"
+						actionListener="#{fluxoBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+
+					<!-- Botão Cancelar -->
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo').hide();">
+						<!-- Reseta as mensagens de validação -->
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
