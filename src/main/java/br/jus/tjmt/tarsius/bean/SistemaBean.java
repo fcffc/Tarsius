@@ -77,7 +77,7 @@ public class SistemaBean implements Serializable {
 			sistemaDAO.excluir(sistema);
 			// Recarrega a listagem de Sistema
 			sistemas = sistemaDAO.listar("sigla");
-			Messages.addGlobalInfo("Sistema: " + sistema.getSigla() + "excluído com sucesso.");
+			Messages.addGlobalInfo("Sistema: " + sistema.getSigla() + " excluído com sucesso.");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Falha ao excluir Sistema.");
 			erro.printStackTrace();

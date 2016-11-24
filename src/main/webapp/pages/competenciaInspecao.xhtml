@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<!-- Listagem de registros e ações -->
+	<ui:define name="conteudo">
+
+		<h:form id="formListagem">
+			<p:panel>
+				<p:breadCrumb>
+					<p:menuitem style="" value="Categories" url="#" />
+					<p:menuitem title="Gerenciar Sistemas"
+						value="Listagem - Competências" url="competenciaInspecao.xhtml" />
+				</p:breadCrumb>
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true"
+					value="#{competenciaInspecaoBean.competenciaInspecaos}"
+					var="cursorCompetencia" rows="10" style="margin-top:5px">
+					<f:facet name="footer">
+
+						<!-- Botão Novo -->
+						<p:commandButton value="Novo" type=""
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{competenciaInspecaoBean.novo}"
+							update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+
+					</f:facet>
+					<p:column headerText="Descrição"
+						sortBy="#{cursorCompetencia.descricao}">
+						<h:outputText value="#{cursorCompetencia.descricao}" />
+					</p:column>
+
+					<p:column headerText="Data Início"
+						sortBy="#{cursorCompetencia.dataInicio}">
+						<h:outputText value="#{cursorCompetencia.dataInicio}">
+							<f:convertDateTime locale="pt_BR" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Data Fim"
+						sortBy="#{cursorCompetencia.dataFim}">
+						<h:outputText value="#{cursorCompetencia.dataFim}">
+							<f:convertDateTime locale="pt_BR" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Observação"
+						sortBy="#{cursorCompetencia.observacao}">
+						<h:outputText value="#{cursorCompetencia.observacao}" />
+					</p:column>
+
+					<p:column headerText="Ações">
+
+						<!-- Botão Excluir -->
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{competenciaInspecaoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir a Competência da Inspeção?"
+								icon="ui-icon-alert" />
+							<f:attribute name="competenciaInspecaoSelecionada"
+								value="#{cursorCompetencia}" />
+						</p:commandButton>
+
+						<!-- Botão Editar -->
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{competenciaInspecaoBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="competenciaInspecaoSelecionada"
+								value="#{cursorCompetencia}" />
+							<!-- Reseta as mensagens de validação -->
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<!-- Caixa de confirmação -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<!-- Campo de Cadastro -->
+		<p:dialog header="Competências - Cadastro" widgetVar="dialogo"
+			draggable="true" resizable="true" modal="true">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="descricao" value="Descrição: " />
+					<p:inputText id="descricao" maxlength="80" size="40"
+						value="#{competenciaInspecaoBean.competenciaInspecao.descricao}"
+						required="true"
+						requiredMessage="O campo 'Descrição' é obrigatório." />
+
+					<p:outputLabel for="dataInicio" value="Data Início: " />
+					<p:calendar id="dataInicio"
+						value="#{competenciaInspecaoBean.competenciaInspecao.dataInicio}"
+						required="false" size="10" locale="pt_BR" />
+
+					<p:outputLabel for="dataFim" value="Data Fim: " />
+					<p:calendar id="dataFim"
+						value="#{competenciaInspecaoBean.competenciaInspecao.dataFim}"
+						required="false" size="10" locale="pt_BR" />
+
+
+					<p:outputLabel for="observacao" value="Observação: " />
+					<p:inputTextarea id="observacao" maxlength="100"
+						style="width: 356px; resize: none;"
+						value="#{competenciaInspecaoBean.competenciaInspecao.observacao}"
+						required="false" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="4">
+					<!-- Botão salvar -->
+					<p:commandButton value="Salvar"
+						actionListener="#{competenciaInspecaoBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+
+					<!-- Botão Cancelar -->
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo').hide();">
+						<!-- Reseta as mensagens de validação -->
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

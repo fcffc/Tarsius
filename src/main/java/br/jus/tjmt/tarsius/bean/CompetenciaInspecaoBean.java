@@ -77,7 +77,7 @@ public class CompetenciaInspecaoBean implements Serializable {
 			competenciaInspecaoDAO.excluir(competenciaInspecao);
 			// Recarrega a listagem de cargo
 			competenciaInspecaos = competenciaInspecaoDAO.listar("descricao");
-			Messages.addGlobalInfo("Competência: " + competenciaInspecao.getDescricao() + "excluída com sucesso.");
+			Messages.addGlobalInfo("Competência: " + competenciaInspecao.getDescricao() + " excluída com sucesso.");
 		}catch(RuntimeException erro){
 			Messages.addFlashGlobalError("Falha ao excluir Competência.");
 			erro.printStackTrace();
