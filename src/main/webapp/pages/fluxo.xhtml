@@ -25,9 +25,9 @@
 					<f:facet name="footer">
 
 						<!-- Botão Novo -->
-						<p:commandButton value="Novo" type=""
+						<p:commandButton value="Novo" 
 							oncomplete="PF('dialogo').show();"
-							actionListener="#{fluxoBean.novo}" update=":formCadastro:painel">
+							actionListener="#{fluxoBean.novo}" update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
@@ -36,9 +36,9 @@
 						<h:outputText value="#{cursorFluxo.nome}" />
 					</p:column>
 
-					<p:column headerText="Processo"
+					<p:column headerText="Processo" 
 						sortBy="#{cursorFluxo.processo.nome}">
-						<h:outputText value="#{cursorFluxo.processo.nome}" />
+						<h:outputText value="#{cursorFluxo.processo.nome}" />						
 
 					</p:column>
 					<p:column headerText="Observação">
@@ -89,8 +89,15 @@
 						requiredMessage="O campo 'Nome' é obrigatório." />
 
 					<p:outputLabel for="processo" value="Processo: "  />
-					<p:selectOneMenu value="#{fluxoBean.fluxo.processo.codigo}" filter="true" >
-						<f:selectItem itemValue="#{fluxoBean.processos}" itemLabel="Selecione um Processo" />
+					<p:selectOneMenu id="processo" filter="true"
+						 value="#{fluxoBean.fluxo.processo}" 
+						 converter="omnifaces.SelectItemsConverter" required="true"
+						 requiredMessage="O campo 'Processo' é obrigatório.">
+						<f:selectItem noSelectionOption="true" 
+							itemLabel="Selecione um Processo" />
+						<f:selectItems value="#{fluxoBean.processos}" var="cursorProcesso"
+							itemValue="#{cursorProcesso}"
+							itemLabel="#{cursorProcesso.nome}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel for="observacao" value="Observação: " />
