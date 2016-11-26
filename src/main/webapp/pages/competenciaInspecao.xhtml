@@ -64,17 +64,6 @@
 
 					<p:column headerText="Ações">
 
-						<!-- Botão Excluir -->
-						<p:commandButton icon="ui-icon-trash"
-							actionListener="#{competenciaInspecaoBean.excluir}"
-							update=":mensagem :formListagem:tabela">
-							<p:confirm header="Confirmação"
-								message="Deseja excluir a Competência da Inspeção?"
-								icon="ui-icon-alert" />
-							<f:attribute name="competenciaInspecaoSelecionada"
-								value="#{cursorCompetencia}" />
-						</p:commandButton>
-
 						<!-- Botão Editar -->
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{competenciaInspecaoBean.editar}"
@@ -84,6 +73,17 @@
 							<!-- Reseta as mensagens de validação -->
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						
+						<!-- Botão Excluir -->
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{competenciaInspecaoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir a Competência da Inspeção?"
+								icon="ui-icon-alert" />
+							<f:attribute name="competenciaInspecaoSelecionada"
+								value="#{cursorCompetencia}" />
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
@@ -133,13 +133,9 @@
 						actionListener="#{competenciaInspecaoBean.salvar}"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
-					<!-- Botão Cancelar -->
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('dialogo').hide();">
-						<!-- Reseta as mensagens de validação -->
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
+					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
+					<p:button outcome="competenciaInspecao" value="Cancelar">
+					</p:button>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

@@ -36,30 +36,33 @@
 					<p:column headerText="Sigla" sortBy="#{cursorNomenclatura.sigla}">
 						<h:outputText value="#{cursorNomenclatura.sigla}" />
 					</p:column>
-					
-					<p:column headerText="Descrição" sortBy="#{cursorNomenclatura.descricao}">
+
+					<p:column headerText="Descrição"
+						sortBy="#{cursorNomenclatura.descricao}">
 						<h:outputText value="#{cursorNomenclatura.descricao}" />
 					</p:column>
-					
+
 					<p:column headerText="Ações">
 
+						<!-- Botão Editar -->
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{nomenclaturaBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="nomenclaturaSelecionada"
+								value="#{cursorNomenclatura}" />
+							<!-- Reseta as mensagens de validação -->
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						
 						<!-- Botão Excluir -->
 						<p:commandButton icon="ui-icon-trash"
 							actionListener="#{nomenclaturaBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<p:confirm header="Confirmação"
 								message="Deseja excluir a Nomenclatura?" icon="ui-icon-alert" />
-							<f:attribute name="nomenclaturaSelecionada" value="#{cursorNomenclatura}" />
-						</p:commandButton>
-
-						<!-- Botão Editar -->
-						<p:commandButton icon="ui-icon-pencil"
-							actionListener="#{nomenclaturaBean.editar}"
-							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
-							<f:attribute name="nomenclaturaSelecionada" value="#{cursorNomenclatura}" />
-							<!-- Reseta as mensagens de validação -->
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							<f:attribute name="nomenclaturaSelecionada"
+								value="#{cursorNomenclatura}" />
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
@@ -83,12 +86,12 @@
 					<p:inputText id="sigla" maxlength="20" size="40"
 						value="#{nomenclaturaBean.nomenclatura.sigla}" required="true"
 						requiredMessage="O campo 'Sigla' é obrigatório." />
-						
+
 					<p:outputLabel for="descricao" value="Descrição: " />
 					<p:inputText id="descricao" maxlength="80" size="40"
 						value="#{nomenclaturaBean.nomenclatura.descricao}" required="true"
 						requiredMessage="O campo 'Descrição' é obrigatório." />
-					
+
 				</h:panelGrid>
 
 				<h:panelGrid columns="4">
@@ -97,13 +100,9 @@
 						actionListener="#{nomenclaturaBean.salvar}"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
-					<!-- Botão Cancelar -->
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('dialogo').hide();">
-						<!-- Reseta as mensagens de validação -->
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
+					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
+					<p:button outcome="nomenclatura" value="Cancelar">
+					</p:button>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

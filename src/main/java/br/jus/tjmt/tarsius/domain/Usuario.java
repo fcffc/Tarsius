@@ -20,7 +20,7 @@ public class Usuario extends GenericDomain {
 	private Papel papel;
 	@Column(nullable = false)
 	private Boolean notificacao;
-	@Column(length = 8, nullable = false)
+	@Column(length = 32, nullable = false)
 	private String senha;
 
 	public Pessoa getPessoa() {

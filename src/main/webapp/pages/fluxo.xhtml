@@ -25,9 +25,9 @@
 					<f:facet name="footer">
 
 						<!-- Botão Novo -->
-						<p:commandButton value="Novo" 
-							oncomplete="PF('dialogo').show();"
-							actionListener="#{fluxoBean.novo}" update=":mensagem :formCadastro:painel">
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{fluxoBean.novo}"
+							update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
@@ -36,16 +36,27 @@
 						<h:outputText value="#{cursorFluxo.nome}" />
 					</p:column>
 
-					<p:column headerText="Processo" 
+					<p:column headerText="Processo"
 						sortBy="#{cursorFluxo.processo.nome}">
-						<h:outputText value="#{cursorFluxo.processo.nome}" />						
+						<h:outputText value="#{cursorFluxo.processo.nome}" />
 
 					</p:column>
+
 					<p:column headerText="Observação">
 						<h:outputText value="#{cursorFluxo.observacao}" />
 					</p:column>
 
 					<p:column headerText="Ações">
+						<!-- Botão Editar -->
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{fluxoBean.editar}"
+							update=":mensagem: formCadastro:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="fluxoSelecionado" value="#{cursorFluxo}" />
+							<!-- Reseta as mensagens de validação -->
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
 
 						<!-- Botão Excluir -->
 						<p:commandButton icon="ui-icon-trash"
@@ -56,15 +67,6 @@
 							<f:attribute name="fluxoSelecionado" value="#{cursorFluxo}" />
 						</p:commandButton>
 
-						<!-- Botão Editar -->
-						<p:commandButton icon="ui-icon-pencil"
-							actionListener="#{fluxoBean.editar}"
-							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
-							<f:attribute name="fluxoSelecionado" value="#{cursorFluxo}" />
-							<!-- Reseta as mensagens de validação -->
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 
@@ -88,16 +90,15 @@
 						value="#{fluxoBean.fluxo.nome}" required="true"
 						requiredMessage="O campo 'Nome' é obrigatório." />
 
-					<p:outputLabel for="processo" value="Processo: "  />
+					<p:outputLabel for="processo" value="Processo: " />
 					<p:selectOneMenu id="processo" filter="true"
-						 value="#{fluxoBean.fluxo.processo}" 
-						 converter="omnifaces.SelectItemsConverter" required="true"
-						 requiredMessage="O campo 'Processo' é obrigatório.">
-						<f:selectItem noSelectionOption="true" 
+						value="#{fluxoBean.fluxo.processo}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Processo' é obrigatório.">
+						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um Processo" />
 						<f:selectItems value="#{fluxoBean.processos}" var="cursorProcesso"
-							itemValue="#{cursorProcesso}"
-							itemLabel="#{cursorProcesso.nome}" />
+							itemValue="#{cursorProcesso}" itemLabel="#{cursorProcesso.nome}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel for="observacao" value="Observação: " />
@@ -112,13 +113,9 @@
 						actionListener="#{fluxoBean.salvar}"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
-					<!-- Botão Cancelar -->
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('dialogo').hide();">
-						<!-- Reseta as mensagens de validação -->
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
+					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
+					<p:button outcome="fluxo" value="Cancelar">
+					</p:button>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

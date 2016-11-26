@@ -15,8 +15,8 @@
 			<p:panel>
 				<p:breadCrumb>
 					<p:menuitem style="" value="Categories" url="#" />
-					<p:menuitem title="Gerenciar Sistemas"
-						value="Listagem - Sistemas" url="sistema.xhtml" />
+					<p:menuitem title="Gerenciar Sistemas" value="Listagem - Sistemas"
+						url="sistema.xhtml" />
 				</p:breadCrumb>
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
@@ -36,8 +36,9 @@
 					<p:column headerText="Sigla" sortBy="#{cursorSistema.sigla}">
 						<h:outputText value="#{cursorSistema.sigla}" />
 					</p:column>
-					
-					<p:column headerText="Descrição" sortBy="#{cursorSistema.descricao}">
+
+					<p:column headerText="Descrição"
+						sortBy="#{cursorSistema.descricao}">
 						<h:outputText value="#{cursorSistema.descricao}" />
 
 					</p:column>
@@ -48,15 +49,6 @@
 
 					<p:column headerText="Ações">
 
-						<!-- Botão Excluir -->
-						<p:commandButton icon="ui-icon-trash"
-							actionListener="#{sistemaBean.excluir}"
-							update=":mensagem :formListagem:tabela">
-							<p:confirm header="Confirmação"
-								message="Deseja excluir o Sistema?" icon="ui-icon-alert" />
-							<f:attribute name="sistemaSelecionado" value="#{cursorSistema}" />
-						</p:commandButton>
-
 						<!-- Botão Editar -->
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{sistemaBean.editar}"
@@ -65,6 +57,15 @@
 							<!-- Reseta as mensagens de validação -->
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+
+						<!-- Botão Excluir -->
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{sistemaBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o Sistema?" icon="ui-icon-alert" />
+							<f:attribute name="sistemaSelecionado" value="#{cursorSistema}" />
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
@@ -88,7 +89,7 @@
 					<p:inputText id="sigla" maxlength="20" size="40"
 						value="#{sistemaBean.sistema.sigla}" required="true"
 						requiredMessage="O campo 'Sigla' é obrigatório." />
-						
+
 					<p:outputLabel for="descricao" value="Descrição: " />
 					<p:inputText id="descricao" maxlength="80" size="40"
 						value="#{sistemaBean.sistema.descricao}" required="true"
@@ -106,13 +107,9 @@
 						actionListener="#{sistemaBean.salvar}"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
-					<!-- Botão Cancelar -->
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('dialogo').hide();">
-						<!-- Reseta as mensagens de validação -->
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
+					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
+					<p:button outcome="sistema" value="Cancelar">
+					</p:button>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

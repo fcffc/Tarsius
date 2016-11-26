@@ -25,10 +25,9 @@
 					<f:facet name="footer">
 
 						<!-- Botão Novo -->
-						<p:commandButton value="Novo" type=""
-							oncomplete="PF('dialogo').show();"
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 							actionListener="#{processoBean.novo}"
-							update=":formCadastro:painel">
+							update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
@@ -44,15 +43,6 @@
 
 					<p:column headerText="Ações">
 
-						<!-- Botão Excluir -->
-						<p:commandButton icon="ui-icon-trash"
-							actionListener="#{processoBean.excluir}"
-							update=":mensagem :formListagem:tabela">
-							<p:confirm header="Confirmação"
-								message="Deseja excluir o Processo?" icon="ui-icon-alert" />
-							<f:attribute name="processoSelecionado" value="#{cursorProcesso}" />
-						</p:commandButton>
-
 						<!-- Botão Editar -->
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{processoBean.editar}"
@@ -61,6 +51,15 @@
 							<!-- Reseta as mensagens de validação -->
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+
+						<!-- Botão Excluir -->
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{processoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o Processo?" icon="ui-icon-alert" />
+							<f:attribute name="processoSelecionado" value="#{cursorProcesso}" />
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
@@ -97,13 +96,9 @@
 						actionListener="#{processoBean.salvar}"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
-					<!-- Botão Cancelar -->
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('dialogo').hide();">
-						<!-- Reseta as mensagens de validação -->
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
+					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
+					<p:button outcome="processo" value="Cancelar">
+					</p:button>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

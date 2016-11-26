@@ -36,31 +36,35 @@
 					<p:column headerText="Sigla" sortBy="#{cursorTipoArtefato.sigla}">
 						<h:outputText value="#{cursorTipoArtefato.sigla}" />
 					</p:column>
-					
-					<p:column headerText="Descrição" sortBy="#{cursorTipoArtefato.descricao}">
+
+					<p:column headerText="Descrição"
+						sortBy="#{cursorTipoArtefato.descricao}">
 						<h:outputText value="#{cursorTipoArtefato.descricao}" />
 					</p:column>
-					
+
 					<p:column headerText="Ações">
+					
+					<!-- Botão Editar -->
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{tipoArtefatoBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="tipoArtefatoSelecionado"
+								value="#{cursorTipoArtefato}" />
+							<!-- Reseta as mensagens de validação -->
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
 
 						<!-- Botão Excluir -->
 						<p:commandButton icon="ui-icon-trash"
 							actionListener="#{tipoArtefatoBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<p:confirm header="Confirmação"
-								message="Deseja excluir o Tipo de Artefato?" icon="ui-icon-alert" />
-							<f:attribute name="tipoArtefatoSelecionado" value="#{cursorTipoArtefato}" />
-						</p:commandButton>
-
-						<!-- Botão Editar -->
-						<p:commandButton icon="ui-icon-pencil"
-							actionListener="#{tipoArtefatoBean.editar}"
-							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
-							<f:attribute name="tipoArtefatoSelecionado" value="#{cursorTipoArtefato}" />
-							<!-- Reseta as mensagens de validação -->
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
+								message="Deseja excluir o Tipo de Artefato?"
+								icon="ui-icon-alert" />
+							<f:attribute name="tipoArtefatoSelecionado"
+								value="#{cursorTipoArtefato}" />
+						</p:commandButton>						
 					</p:column>
 				</p:dataTable>
 
@@ -83,12 +87,12 @@
 					<p:inputText id="sigla" maxlength="20" size="40"
 						value="#{tipoArtefatoBean.tipoArtefato.sigla}" required="true"
 						requiredMessage="O campo 'Sigla' é obrigatório." />
-						
+
 					<p:outputLabel for="descricao" value="Descrição: " />
 					<p:inputText id="descricao" maxlength="80" size="40"
 						value="#{tipoArtefatoBean.tipoArtefato.descricao}" required="true"
 						requiredMessage="O campo 'Descrição' é obrigatório." />
-					
+
 				</h:panelGrid>
 
 				<h:panelGrid columns="4">
@@ -97,13 +101,9 @@
 						actionListener="#{tipoArtefatoBean.salvar}"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
-					<!-- Botão Cancelar -->
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('dialogo').hide();">
-						<!-- Reseta as mensagens de validação -->
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
+					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
+					<p:button outcome="tipoArtefato" value="Cancelar">
+					</p:button>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

@@ -15,20 +15,19 @@
 			<p:panel>
 				<p:breadCrumb>
 					<p:menuitem style="" value="Categories" url="#" />
-					<p:menuitem title="Gerenciar Cargos"
-						value="Listagem - Cargos" url="cargo.xhtml" />
+					<p:menuitem title="Gerenciar Cargos" value="Listagem - Cargos"
+						url="cargo.xhtml" />
 				</p:breadCrumb>
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					paginator="true" value="#{cargoBean.cargos}"
-					var="cursorCargo" rows="10" style="margin-top:5px">
+					paginator="true" value="#{cargoBean.cargos}" var="cursorCargo"
+					rows="10" style="margin-top:5px">
 					<f:facet name="footer">
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" type=""
 							oncomplete="PF('dialogo').show();"
-							actionListener="#{cargoBean.novo}"
-							update=":formCadastro:painel">
+							actionListener="#{cargoBean.novo}" update=":formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
@@ -44,15 +43,6 @@
 
 					<p:column headerText="Ações">
 
-						<!-- Botão Excluir -->
-						<p:commandButton icon="ui-icon-trash"
-							actionListener="#{cargoBean.excluir}"
-							update=":mensagem :formListagem:tabela">
-							<p:confirm header="Confirmação"
-								message="Deseja excluir o Cargo?" icon="ui-icon-alert" />
-							<f:attribute name="cargoSelecionado" value="#{cursorCargo}" />
-						</p:commandButton>
-
 						<!-- Botão Editar -->
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{cargoBean.editar}"
@@ -62,6 +52,16 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
+						
+						<!-- Botão Excluir -->
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{cargoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação" message="Deseja excluir o Cargo?"
+								icon="ui-icon-alert" />
+							<f:attribute name="cargoSelecionado" value="#{cursorCargo}" />
+						</p:commandButton>
+
 					</p:column>
 				</p:dataTable>
 
@@ -97,13 +97,9 @@
 						actionListener="#{cargoBean.salvar}"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
-					<!-- Botão Cancelar -->
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('dialogo').hide();">
-						<!-- Reseta as mensagens de validação -->
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
+					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
+					<p:button outcome="cargo" value="Cancelar">
+					</p:button>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
