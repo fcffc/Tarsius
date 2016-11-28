@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
 @Entity
@@ -12,9 +13,9 @@ public class Pessoa extends GenericDomain {
 	private String nome;
 	@Column(length = 20, nullable = false)
 	private int matricula;
-	@Column(length = 10)
+	@Column(length = 14)
 	private String telefone;
-	@Column(length = 10)
+	@Column(length = 14)
 	private String celular;
 	@ManyToOne
 	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
@@ -23,7 +24,7 @@ public class Pessoa extends GenericDomain {
 	private String email;
 	@Column(length = 60)
 	private String formacao;
-	@Column(nullable = false)
+	
 	private Boolean situacao;
 
 	public String getNome() {
@@ -84,6 +85,17 @@ public class Pessoa extends GenericDomain {
 
 	public Boolean getSituacao() {
 		return situacao;
+	}
+	
+	// Formata True / False para Ativo / Inativo
+	@Transient
+	public String getSituacaoFormatada(){
+		String situacaoFormatada = "Inativo";
+		
+		if(situacao){
+			situacaoFormatada = "Ativo";
+		}
+		return situacaoFormatada;
 	}
 
 	public void setSituacao(Boolean situacao) {

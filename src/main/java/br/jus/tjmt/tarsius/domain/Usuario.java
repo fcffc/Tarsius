@@ -6,6 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import br.jus.tjmt.tarsius.enumeracao.Papel;
 
@@ -22,6 +23,8 @@ public class Usuario extends GenericDomain {
 	private Boolean notificacao;
 	@Column(length = 32, nullable = false)
 	private String senha;
+	@Transient
+	private String senhaSemCriptografia;
 
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -53,5 +56,13 @@ public class Usuario extends GenericDomain {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getSenhaSemCriptografia() {
+		return senhaSemCriptografia;
+	}
+	
+	public void setSenhaSemCriptografia(String senhaSemCriptografia) {
+		this.senhaSemCriptografia = senhaSemCriptografia;
 	}
 }

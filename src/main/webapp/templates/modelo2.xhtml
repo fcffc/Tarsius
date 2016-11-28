@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:fa="http://primefaces.org/fa"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Tarsius</title>
+	<h:outputScript library="js" name="scripts.js" />
+	<h:outputStylesheet library="css" name="estilos.css" />
+	<h:outputStylesheet library="css" name="font-awesome.css" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="190"
+			header="Controle e Gestão de Inspeção" resizable="false"
+			closable="false" collapsible="true">
+			<div id="topo">
+				<p:graphicImage library="images" name="banner.png"
+					styleClass="imagemCentralizada" />
+			</div>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" size="40" header="." resizable="true"
+			closable="false" collapsible="true">
+			<h:outputText value="" />
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="200" header="Menu Principal"
+			resizable="true" closable="false" collapsible="true">
+			<p:panelMenu>
+				<p:submenu label="Tarsius" url="inicial.xhtml">
+					<p:menuitem value="Inicial" icon="fa fa-database"
+						url="inicial.xhtml" />
+				</p:submenu>
+				<p:submenu label="Gerenciar">
+					<p:menuitem value="Sistema" icon="fa fa-database"
+						url="sistema.xhtml" />
+					<p:menuitem value="Cargo" icon="fa fa-user-md" url="cargo.xhtml" />
+					<p:menuitem value="Checklist" icon="fa fa-list-ol" url="#" />
+					<p:menuitem value="Comp. Inspeção" icon="fa fa-calendar"
+						url="competenciaInspecao.xhtml" />
+					<p:menuitem value="Fluxo" icon="fa fa-retweet" url="fluxo.xhtml" />
+					<p:menuitem value="Processo" icon="fa fa-sitemap"
+						url="processo.xhtml" />
+					<p:menuitem value="Gestor" icon="fa fa-user-secret"
+						url="gestor.xhtml" />
+					<p:menuitem value="Pessoa" icon="fa fa-male" url="pessoa.xhtml" />
+				</p:submenu>
+				<p:separator />
+				<p:submenu label="Inspeção">
+					<p:menuitem value="Acompanhamento" icon="fa fa-eye" url="#" />
+					<p:menuitem value="Execução" icon="fa fa-play-circle-o" url="#" />
+				</p:submenu>
+				<p:separator />
+				<p:submenu label="Evidência">
+					<p:menuitem value="Artefatos" url="#" icon="fa fa-file-text" />
+					<p:menuitem value="Funcionalidade" url="#" icon="fa fa-laptop" />
+				</p:submenu>
+				<p:separator />
+				<p:submenu label="Relatórios"></p:submenu>
+				<p:separator />
+				<p:submenu label="Configuração">
+					<p:menuitem value="Board" url="#" icon="fa fa-tachometer" />
+					<p:menuitem value="Nomenclatura" url="nomenclatura.xhtml"
+						icon="fa fa-text-width" />
+					<p:menuitem value="Notificação" url="#" icon="fa fa-paper-plane" />
+					<p:menuitem value="Tipo Artefato" url="tipoArtefato.xhtml"
+						icon="fa fa-files-o" />
+					<p:menuitem value="Usuário" url="#" icon="fa fa-users" />
+				</p:submenu>
+			</p:panelMenu>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center" header="." resizable="true"
+			closable="false" collapsible="true">
+			<ui:insert name="conteudo" />
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>
