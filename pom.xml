@@ -104,7 +104,7 @@
 		</dependency>
 		
 		<!-- Apache Shiro core -->
-		<!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-core -->
+		<!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-cores -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>

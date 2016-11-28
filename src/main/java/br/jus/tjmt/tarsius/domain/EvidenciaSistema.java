@@ -20,7 +20,6 @@ public class EvidenciaSistema extends GenericDomain {
 	private Sistema aplicacao;
 	@ManyToOne
 	private CompetenciaInspecao competencia;
-	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private StatusGeral status;
 
