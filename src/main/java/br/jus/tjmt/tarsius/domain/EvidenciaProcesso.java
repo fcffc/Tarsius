@@ -13,14 +13,24 @@ import br.jus.tjmt.tarsius.enumeracao.StatusGeral;
 @SuppressWarnings("serial")
 @Entity
 public class EvidenciaProcesso extends GenericDomain {
+	@Column(length = 60, nullable = false)
+	private String artefato;
 	@OneToOne // 1 p/ 1
 	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
 	private TipoArtefato tipo;
 	@ManyToOne
 	private CompetenciaInspecao competencia;
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	
 	private StatusGeral status;
+
+	public String getArtefato() {
+		return artefato;
+	}
+
+	public void setArtefato(String artefato) {
+		this.artefato = artefato;
+	}
 
 	public TipoArtefato getTipo() {
 		return tipo;
