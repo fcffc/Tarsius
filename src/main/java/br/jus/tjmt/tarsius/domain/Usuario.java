@@ -19,7 +19,7 @@ public class Usuario extends GenericDomain {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Papel papel;
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Boolean notificacao;
 	@Column(length = 32, nullable = false)
 	private String senha;
@@ -46,6 +46,17 @@ public class Usuario extends GenericDomain {
 		return notificacao;
 	}
 
+	// Formata True / False para Sim / Não
+	@Transient
+	public String getNotificacaoFormatada() {
+		String notificacaoFormatada = "Não";
+
+		if (notificacao) {
+			notificacaoFormatada = "Sim";
+		}
+		return notificacaoFormatada;
+	}
+
 	public void setNotificacao(Boolean notificacao) {
 		this.notificacao = notificacao;
 	}
@@ -57,11 +68,11 @@ public class Usuario extends GenericDomain {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
 	public String getSenhaSemCriptografia() {
 		return senhaSemCriptografia;
 	}
-	
+
 	public void setSenhaSemCriptografia(String senhaSemCriptografia) {
 		this.senhaSemCriptografia = senhaSemCriptografia;
 	}

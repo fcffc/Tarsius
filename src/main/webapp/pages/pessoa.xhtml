@@ -99,11 +99,8 @@
 					<p:outputLabel for="matricula" value="Matrícula: " />
 					<p:inputText id="matricula" maxlength="20" size="40"
 						value="#{pessoaBean.pessoa.matricula}" required="true"
-						requiredMessage="O campo 'Matrícula' é obrigatório."
-						converterMessage="Informe um valor válido para o campo 'Matrícula'."
-						validatorMessage="Informe um valor maior ou igual a 0 no campo 'Matrícula'.">
-						<f:validateLongRange minimum="0" maximum="10000000" />
-					</p:inputText>
+						requiredMessage="O campo 'Matrícula' é obrigatório." />
+					
 
 					<p:outputLabel for="telefone" value="Telefone: " />
 					<p:inputMask id="telefone" mask="(99)99999-9999" size="40"

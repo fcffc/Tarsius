@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:fa="http://primefaces.org/fa"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Tarsius</title>
+	<h:outputScript library="js" name="scripts.js" />
+	<h:outputStylesheet library="css" name="estilos.css" />
+	<h:outputStylesheet library="css" name="font-awesome.css" />
+</h:head>
+<h:body>
+	<p:growl id="mensagem" />
+	<p:panel>
+		<div id="geral">
+			<div id="topo">
+				<p:graphicImage library="images" name="banner.png"
+					styleClass="imagemCentralizada" />
+			</div>
+
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-30"
+				layout="grid" styleClass="ui-panelgrid-blank">
+
+				<div id="login">
+					<p:dialog header="Inspeção Tarsius - Login" closable="false"
+						draggable="false" resizable="false" modal="false" visible="true">
+						<h:form>
+							<h:panelGrid columns="2">
+								<p:outputLabel for="matricula" value="Matrícula: " />
+								<p:inputText id="matricula" maxlength="20" size="30"
+									required="true"
+									requiredMessage="O campo 'Matrícula' é obrigatório."
+									value="#{autenticacaoBean.usuario.pessoa.matricula}" />
+
+								<p:outputLabel for="senha" value="Senha: " />
+								<p:password id="senha" maxlength="8" size="30" required="true"
+									requiredMessage="O campo 'Senha' é obrigatório." 
+									value="#{autenticacaoBean.usuario.senha}"/>
+
+							</h:panelGrid>
+							<h:panelGrid columns="1" style="text-align:left">
+								<p:spacer width="10%" height="1" />
+								<p:commandLink value="Esqueci minha senha." />
+							</h:panelGrid>
+							<h:panelGrid columns="1" width="100%" style="text-align:right">
+								<p:commandButton value="Acessar" update=":mensagem"
+									actionListener="#{autenticacaoBean.autenticar}" />
+							</h:panelGrid>
+						</h:form>
+					</p:dialog>
+				</div>
+			</p:panelGrid>
+
+		</div>
+	</p:panel>
+</h:body>
+
+</html>

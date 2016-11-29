@@ -12,7 +12,7 @@ public class Pessoa extends GenericDomain {
 	@Column(length = 80, nullable = false) // Não pode ser nulo
 	private String nome;
 	@Column(length = 20, nullable = false)
-	private int matricula;
+	private String matricula;
 	@Column(length = 14)
 	private String telefone;
 	@Column(length = 14)
@@ -35,11 +35,11 @@ public class Pessoa extends GenericDomain {
 		this.nome = nome;
 	}
 
-	public int getMatricula() {
+	public String getMatricula() {
 		return matricula;
 	}
 
-	public void setMatricula(int matricula) {
+	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
 
