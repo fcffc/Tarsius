@@ -5,35 +5,25 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import br.jus.tjmt.tarsius.enumeracao.SecaoProcesso;
 import br.jus.tjmt.tarsius.enumeracao.SecaoSistema;
-import br.jus.tjmt.tarsius.enumeracao.StatusInspecao;
 
 @SuppressWarnings("serial")
 @Entity
 public class ItemChecklist extends GenericDomain {
-	@Column(length = 200, nullable = false)
-	private String pergunta;
 	@Column(nullable = false)
-	private String descricao;
+	private String pergunta;
 	@Enumerated(EnumType.STRING)
 	private SecaoProcesso secaoProc;
 	@Enumerated(EnumType.STRING)
 	private SecaoSistema secaoAplic;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
-	private Pessoa responsavel;
-	@OneToOne
-	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
-	private Gestor gestor;
-	@OneToOne
-	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
-	private Nomenclatura tipoNConformidade;
-	@Enumerated(EnumType.STRING)
+	private Checklist checklist;
 	@Column(nullable = false)
-	private StatusInspecao statusInspecao;
+	private String usuarioLogado;
 
 	public String getPergunta() {
 		return pergunta;
@@ -41,14 +31,6 @@ public class ItemChecklist extends GenericDomain {
 
 	public void setPergunta(String pergunta) {
 		this.pergunta = pergunta;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 	public SecaoProcesso getSecaoProc() {
@@ -67,35 +49,19 @@ public class ItemChecklist extends GenericDomain {
 		this.secaoAplic = secaoAplic;
 	}
 
-	public Pessoa getResponsavel() {
-		return responsavel;
+	public Checklist getChecklist() {
+		return checklist;
 	}
 
-	public void setResponsavel(Pessoa responsavel) {
-		this.responsavel = responsavel;
+	public void setChecklist(Checklist checklist) {
+		this.checklist = checklist;
 	}
 
-	public Gestor getGestor() {
-		return gestor;
+	public String getUsuarioLogado() {
+		return usuarioLogado;
 	}
 
-	public void setGestor(Gestor gestor) {
-		this.gestor = gestor;
-	}
-
-	public Nomenclatura getTipoNConformidade() {
-		return tipoNConformidade;
-	}
-
-	public void setTipoNConformidade(Nomenclatura tipoNConformidade) {
-		this.tipoNConformidade = tipoNConformidade;
-	}
-
-	public StatusInspecao getStatusInspecao() {
-		return statusInspecao;
-	}
-
-	public void setStatusInspecao(StatusInspecao statusInspecao) {
-		this.statusInspecao = statusInspecao;
+	public void setUsuarioLogado(String usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
 	}
 }

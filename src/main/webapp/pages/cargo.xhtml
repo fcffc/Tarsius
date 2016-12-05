@@ -20,8 +20,15 @@
 				</p:breadCrumb>
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					paginator="true" value="#{cargoBean.cargos}" var="cursorCargo"
+					paginator="true" value="#{cargoBean.cargos}" var="cursorCargo" widgetVar="pesquisar"
 					rows="10" style="margin-top:5px">
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Pesquisar:" style="position:relative; left:390px" />
+							<p:inputText id="globalFilter" filterBy="#{cursorCargo.nome}"
+								style="width:250px; position:relative; left:400px" placeholder="Pressione Enter" />
+						</p:outputPanel>
+					</f:facet>
 					<f:facet name="footer">
 
 						<!-- Botão Novo -->
@@ -52,7 +59,7 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
-						
+
 						<!-- Botão Excluir -->
 						<p:commandButton icon="ui-icon-trash"
 							actionListener="#{cargoBean.excluir}"

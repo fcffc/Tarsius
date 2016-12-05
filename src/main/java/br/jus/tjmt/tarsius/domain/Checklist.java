@@ -4,9 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import br.jus.tjmt.tarsius.enumeracao.TipoPergunta;
 
@@ -20,16 +18,8 @@ public class Checklist extends GenericDomain {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private TipoPergunta tipo;
-	@OneToOne
-	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
-	private Fluxo fluxo;
 	@Column(nullable = false)
 	private Boolean situacao;
-	@ManyToOne
-	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
-	private ItemChecklist itemPergunta;
-	@Column(nullable = false)
-	private String usuarioLogado;
 
 	public String getNome() {
 		return nome;
@@ -55,14 +45,6 @@ public class Checklist extends GenericDomain {
 		this.tipo = tipo;
 	}
 
-	public Fluxo getFluxo() {
-		return fluxo;
-	}
-
-	public void setFluxo(Fluxo fluxo) {
-		this.fluxo = fluxo;
-	}
-
 	public Boolean getSituacao() {
 		return situacao;
 	}
@@ -70,20 +52,14 @@ public class Checklist extends GenericDomain {
 	public void setSituacao(Boolean situacao) {
 		this.situacao = situacao;
 	}
-
-	public ItemChecklist getItemPergunta() {
-		return itemPergunta;
-	}
-
-	public void setItemPergunta(ItemChecklist itemPergunta) {
-		this.itemPergunta = itemPergunta;
-	}
-
-	public String getUsuarioLogado() {
-		return usuarioLogado;
-	}
-
-	public void setUsuarioLogado(String usuarioLogado) {
-		this.usuarioLogado = usuarioLogado;
+	
+	// Formata True / False para Ativo / Inativo
+	@Transient
+	public String getSituacaoFormatada(){
+		String situacaoFormatada = "Inativo";
+		if(situacao){
+			situacaoFormatada = "Ativo";
+		}
+		return situacaoFormatada;
 	}
 }

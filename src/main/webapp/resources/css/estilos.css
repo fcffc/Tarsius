@@ -14,3 +14,7 @@
 	margin-right: auto;
 
 }
+
+.ui-widget, .ui-widget .ui-widget{
+	font-size: 98% !important;
+}
