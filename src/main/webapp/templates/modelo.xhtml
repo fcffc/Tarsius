@@ -27,9 +27,9 @@
 			<p:toolbar style="height:auto;">
 				<f:facet name="left">
 					<p:outputLabel value="Usuário: #{autenticacaoBean.usuarioLogado.pessoa.nome}"
-						style="position: relative;left: 1520px;" />
+						style="position: relative;left: 1000px;" />
 					<p:commandButton value="Sair"
-						style="height:28px;width:90px; text-align:center;position: relative;left: 1530px;" />
+						style="height:28px;width:90px; text-align:center;position: relative;left: 1010px;" />
 				</f:facet>
 			</p:toolbar>
 			</h:form>
@@ -50,7 +50,11 @@
 										url="sistema.xhtml" />
 									<p:menuitem value="Cargo" icon="fa fa-user-md"
 										url="cargo.xhtml" />
-									<p:menuitem value="Checklist" icon="fa fa-list-ol" />
+									<p:submenu label="Checklist">
+										<p:menuitem value="Checklist" icon="fa fa-list-ol" url="checklist.xhtml" />
+										<p:menuitem value="Perguntas" icon="fa fa-question-circle" url="itemChecklist.xhtml" />
+									</p:submenu>
+									
 									<p:menuitem value="Comp. Inspeção" icon="fa fa-calendar"
 										url="competenciaInspecao.xhtml" />
 									<p:menuitem value="Fluxo" icon="fa fa-retweet"

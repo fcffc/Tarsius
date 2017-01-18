@@ -2,11 +2,8 @@ package br.jus.tjmt.tarsius.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
-import br.jus.tjmt.tarsius.enumeracao.TipoPergunta;
 
 @SuppressWarnings("serial")
 @Entity
@@ -15,9 +12,6 @@ public class Checklist extends GenericDomain {
 	private String nome;
 	@Column(length = 20, nullable = false)
 	private String versao;
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	private TipoPergunta tipo;
 	@Column(nullable = false)
 	private Boolean situacao;
 
@@ -37,14 +31,6 @@ public class Checklist extends GenericDomain {
 		this.versao = versao;
 	}
 
-	public TipoPergunta getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoPergunta tipo) {
-		this.tipo = tipo;
-	}
-
 	public Boolean getSituacao() {
 		return situacao;
 	}
@@ -52,12 +38,12 @@ public class Checklist extends GenericDomain {
 	public void setSituacao(Boolean situacao) {
 		this.situacao = situacao;
 	}
-	
+
 	// Formata True / False para Ativo / Inativo
 	@Transient
-	public String getSituacaoFormatada(){
+	public String getSituacaoFormatada() {
 		String situacaoFormatada = "Inativo";
-		if(situacao){
+		if (situacao) {
 			situacaoFormatada = "Ativo";
 		}
 		return situacaoFormatada;

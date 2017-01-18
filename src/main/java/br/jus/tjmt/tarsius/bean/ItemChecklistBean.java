@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.event.ToggleEvent;
 
 import br.jus.tjmt.tarsius.dao.ChecklistDAO;
 import br.jus.tjmt.tarsius.dao.ItemChecklistDAO;
@@ -22,6 +25,7 @@ public class ItemChecklistBean implements Serializable {
 	private ItemChecklist itemChecklist;
 	private List<ItemChecklist> itemChecklists;
 	private List<Checklist> checklists;
+	private Boolean isRederiza = false;
 
 	public ItemChecklist getItemChecklist() {
 		return itemChecklist;
@@ -47,11 +51,19 @@ public class ItemChecklistBean implements Serializable {
 		this.checklists = checklists;
 	}
 
+	public Boolean getIsRederiza() {
+		return isRederiza;
+	}
+
+	public void setIsRederiza(Boolean isRederiza) {
+		this.isRederiza = isRederiza;
+	}
+
 	@PostConstruct
 	public void listar() {
 		try {
 			ItemChecklistDAO itemChecklistDAO = new ItemChecklistDAO();
-			itemChecklists = itemChecklistDAO.listar();
+			itemChecklists = itemChecklistDAO.listar("pergunta");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Falha ao tentar listar os itens do checklist.");
 			erro.printStackTrace();
@@ -63,7 +75,7 @@ public class ItemChecklistBean implements Serializable {
 			itemChecklist = new ItemChecklist();
 			// Popular a seleção de Checklist
 			ChecklistDAO checklistDAO = new ChecklistDAO();
-			checklists = checklistDAO.listar("pergunta"); // ordena por pessoa
+			checklists = checklistDAO.listar("nome"); // ordena por checklist
 		} catch (RuntimeException erro) {
 			// Validar a exception do banco listagem de checklist
 			Messages.addFlashGlobalError("Falha ao cadastrar um novo checklist.");
@@ -81,7 +93,7 @@ public class ItemChecklistBean implements Serializable {
 			// Recarrega a listagem de Checklist
 			ChecklistDAO checklistDAO = new ChecklistDAO();
 			checklists = checklistDAO.listar("nome");
-			itemChecklists = itemChecklistDAO.listar();
+			itemChecklists = itemChecklistDAO.listar("pergunta");
 			Messages.addGlobalInfo("Pergunta salva com sucesso.");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Falha ao cadastrar uma nova Pergunta.");
@@ -116,5 +128,19 @@ public class ItemChecklistBean implements Serializable {
 			Messages.addFlashGlobalError("Falha ao carregar tela de edição.");
 			erro.printStackTrace();
 		}
+	}
+
+	public void renderizar() {
+		if (itemChecklist.getTipo().equals("PROCESSO")) {
+			isRederiza = true;
+		} else {
+			isRederiza = false;
+		}
+	}
+
+	public void handleToggle(ToggleEvent event) {
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selecionar Seção",
+				"Visibility:" + event.getVisibility());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 }

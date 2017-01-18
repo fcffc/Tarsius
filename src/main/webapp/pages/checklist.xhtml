@@ -15,8 +15,7 @@
 			<p:panel>
 				<p:breadCrumb>
 					<p:menuitem style="" value="Categories" url="#" />
-					<p:menuitem title="Checklist"
-						value="Listagem - Checklist"
+					<p:menuitem title="Checklist" value="Listagem - Checklist"
 						url="checklist.xhtml" />
 				</p:breadCrumb>
 
@@ -32,23 +31,21 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
+						<!-- Botão Perguntas -->
+						<p:button outcome="itemChecklist" value="Perguntas"
+							icon="ui-icon-plusthick">							
+						</p:button>
 					</f:facet>
-					<p:column headerText="Nome"
-						sortBy="#{cursorChecklist.nome}">
+					<p:column headerText="Nome" sortBy="#{cursorChecklist.nome}">
 						<h:outputText value="#{cursorChecklist.nome}" />
 					</p:column>
 
-					<p:column headerText="Versão"
-						sortBy="#{cursorChecklist.versao}">
+					<p:column headerText="Versão" sortBy="#{cursorChecklist.versao}">
 						<h:outputText value="#{cursorChecklist.versao}" />
-					</p:column>
+					</p:column>					
 
-					<p:column headerText="Tipo"
-						sortBy="#{cursorChecklist.tipo.toString()}">
-						<h:outputText value="#{cursorChecklist.tipo.toString()}" />
-					</p:column>
-					
-					<p:column headerText="Situação" sortBy="#{cursorChecklist.situacaoFormatada}">
+					<p:column headerText="Situação"
+						sortBy="#{cursorChecklist.situacaoFormatada}">
 						<h:outputText value="#{cursorChecklist.situacaoFormatada}" />
 					</p:column>
 
@@ -70,8 +67,7 @@
 							actionListener="#{checklistBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<p:confirm header="Confirmação"
-								message="Deseja excluir o Checklist?"
-								icon="ui-icon-alert" />
+								message="Deseja excluir o Checklist?" icon="ui-icon-alert" />
 							<f:attribute name="checklistSelecionado"
 								value="#{cursorChecklist}" />
 						</p:commandButton>
@@ -97,23 +93,13 @@
 
 					<p:outputLabel for="nome" value="Nome: " />
 					<p:inputText id="nome" maxlength="100" size="40"
-						value="#{checklistBean.checklist.nome}"
-						required="true"
+						value="#{checklistBean.checklist.nome}" required="true"
 						requiredMessage="O campo 'Nome' é obrigatório." />
-						
+
 					<p:outputLabel for="versao" value="Versão: " />
 					<p:inputText id="versao" maxlength="20" size="40"
-						value="#{checklistBean.checklist.versao}"
-						required="true"
-						requiredMessage="O campo 'Versão' é obrigatório." />
-
-					<p:outputLabel for="tipo" value="Tipo:" />
-					<p:selectOneRadio id="tipo"
-						value="#{checklistBean.checklist.tipo}" required="true"
-						requiredMessage="O campo 'Tipo' é obrigatório.">
-						<f:selectItem itemValue="PROCESSO" itemLabel="Processo" />
-						<f:selectItem itemValue="APLICACAO" itemLabel="Aplicação" />						
-					</p:selectOneRadio>
+						value="#{checklistBean.checklist.versao}" required="true"
+						requiredMessage="O campo 'Versão' é obrigatório." />					
 
 					<p:outputLabel for="situacao" value="Ativo:" />
 					<p:selectBooleanCheckbox id="situacao"
