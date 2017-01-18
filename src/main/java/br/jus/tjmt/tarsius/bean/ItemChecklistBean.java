@@ -25,7 +25,7 @@ public class ItemChecklistBean implements Serializable {
 	private ItemChecklist itemChecklist;
 	private List<ItemChecklist> itemChecklists;
 	private List<Checklist> checklists;
-	private Boolean isRederiza = false;
+	private Boolean isRederiza = false; //deletar
 
 	public ItemChecklist getItemChecklist() {
 		return itemChecklist;
