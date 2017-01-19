@@ -33,7 +33,7 @@
 						</p:commandButton>
 						<!-- Botão Perguntas -->
 						<p:button outcome="itemChecklist" value="Perguntas"
-							icon="ui-icon-plusthick">							
+							icon="ui-icon-plusthick">
 						</p:button>
 					</f:facet>
 					<p:column headerText="Nome" sortBy="#{cursorChecklist.nome}">
@@ -42,7 +42,13 @@
 
 					<p:column headerText="Versão" sortBy="#{cursorChecklist.versao}">
 						<h:outputText value="#{cursorChecklist.versao}" />
-					</p:column>					
+					</p:column>
+
+					<p:column headerText="Tipo"
+						sortBy="#{cursorChecklist.tipoInspecao.tipoInspecao}">
+						<h:outputText
+							value="#{cursorChecklist.tipoInspecao.tipoInspecao}" />
+					</p:column>
 
 					<p:column headerText="Situação"
 						sortBy="#{cursorChecklist.situacaoFormatada}">
@@ -99,7 +105,19 @@
 					<p:outputLabel for="versao" value="Versão: " />
 					<p:inputText id="versao" maxlength="20" size="40"
 						value="#{checklistBean.checklist.versao}" required="true"
-						requiredMessage="O campo 'Versão' é obrigatório." />					
+						requiredMessage="O campo 'Versão' é obrigatório." />
+
+					<p:outputLabel for="tipoInspecao" value="Tipo de Inspeção: " />
+					<p:selectOneMenu id="tipoInspecao" filter="true"
+						value="#{checklistBean.checklist.tipoInspecao}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Tipo de Inspeção' é obrigatório.">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um Tipo" />
+						<f:selectItems value="#{checklistBean.tipoInspecaos}" var="cursorTipoInspecao"
+							itemValue="#{cursorTipoInspecao}"
+							itemLabel="#{cursorTipoInspecao.tipoInspecao}" />
+					</p:selectOneMenu>
 
 					<p:outputLabel for="situacao" value="Ativo:" />
 					<p:selectBooleanCheckbox id="situacao"

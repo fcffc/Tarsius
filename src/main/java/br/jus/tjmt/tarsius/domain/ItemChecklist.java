@@ -9,7 +9,6 @@ import javax.persistence.ManyToOne;
 
 import br.jus.tjmt.tarsius.enumeracao.SecaoProcesso;
 import br.jus.tjmt.tarsius.enumeracao.SecaoSistema;
-import br.jus.tjmt.tarsius.enumeracao.TipoPergunta;
 
 @SuppressWarnings("serial")
 @Entity
@@ -25,9 +24,7 @@ public class ItemChecklist extends GenericDomain {
 	private Checklist checklist;
 	@Column(nullable = true)
 	private String usuarioLogado;
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	private TipoPergunta tipo;
+	@Enumerated(EnumType.STRING)	
 
 	public String getPergunta() {
 		return pergunta;
@@ -67,13 +64,5 @@ public class ItemChecklist extends GenericDomain {
 
 	public void setUsuarioLogado(String usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
-	}
-
-	public TipoPergunta getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoPergunta tipo) {
-		this.tipo = tipo;
-	}
+	}	
 }

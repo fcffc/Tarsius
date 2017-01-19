@@ -40,6 +40,7 @@
 		<mapping class="br.jus.tjmt.tarsius.domain.Processo" />
 		<mapping class="br.jus.tjmt.tarsius.domain.Sistema" />
 		<mapping class="br.jus.tjmt.tarsius.domain.TipoArtefato" />
+		<mapping class="br.jus.tjmt.tarsius.domain.TipoInspecao" />
 
 		<!-- Com Chave Estrangeira -->
 		<mapping class="br.jus.tjmt.tarsius.domain.Checklist" />

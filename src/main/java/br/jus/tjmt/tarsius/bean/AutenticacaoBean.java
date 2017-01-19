@@ -47,7 +47,7 @@ public class AutenticacaoBean {
 			usuarioLogado = usuarioDAO.autenticar(usuario.getPessoa().getMatricula(), usuario.getSenha());
 
 			if (usuarioLogado == null) {
-				Messages.addGlobalError("Matrícula e/ou senha incorretos");
+				Messages.addGlobalError("Matrícula e/ou senha incorreto");
 				return;
 			}
 			Faces.redirect("./pages/inicial.xhtml");

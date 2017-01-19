@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<!-- Listagem de registros e ações. -->
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel>
+				<p:breadCrumb>
+					<p:menuitem style="" value="Categories" url="#" />
+					<p:menuitem title="Gerenciar Cargos"
+						value="Listagem - Tipo de Inspeção" url="tipoInspecao.xhtml" />
+				</p:breadCrumb>
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{tipoInspecaoBean.tipoInspecaos}"
+					var="cursorTipoInspecao" rows="10" style="margin-top:5px">
+					<f:facet name="footer">
+
+						<!-- Botão Novo -->
+						<p:commandButton value="Novo" type=""
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{tipoInspecaoBean.novo}"
+							update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+					<p:column headerText="Tipo de Inspeção"
+						sortBy="#{cursorTipoInspecao.tipoInspecao}">
+						<h:outputText value="#{cursorTipoInspecao.tipoInspecao}" />
+
+					</p:column>
+					<p:column headerText="Observação"
+						sortBy="#{cursorTipoInspecao.observacao}">
+						<h:outputText value="#{cursorTipoInspecao.observacao}" />
+					</p:column>
+
+					<p:column headerText="Ações">
+
+						<!-- Botão Editar -->
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{tipoInspecaoBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="tipoInspecaoSelecionado"
+								value="#{cursorTipoInspecao}" />
+							<!-- Reseta as mensagens de validação -->
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+
+						<!-- Botão Excluir -->
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{tipoInspecaoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o Tipo de Inspeção?"
+								icon="ui-icon-alert" />
+							<f:attribute name="tipoInspecaoSelecionado"
+								value="#{cursorTipoInspecao}" />
+						</p:commandButton>
+
+					</p:column>
+				</p:dataTable>
+
+				<!-- Caixa de confirmação -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<!-- Campo de Cadastro -->
+		<p:dialog header="Tipo de Inspeção - Cadastro" widgetVar="dialogo"
+			draggable="true" resizable="true" modal="true">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="tipoInspecao" value="Tipo de Inspeção: " />
+					<p:inputText id="tipoInspecao" maxlength="60" size="40"
+						value="#{tipoInspecaoBean.tipoInspecao.tipoInspecao}"
+						required="true"
+						requiredMessage="O campo 'Tipo de Inspeção' é obrigatório." />
+
+					<p:outputLabel for="observacao" value="Observação: " />
+					<p:inputTextarea id="observacao" maxlength="100"
+						style="width: 356px; resize: none;"
+						value="#{tipoInspecaoBean.tipoInspecao.observacao}"
+						required="false" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="4">
+					<!-- Botão salvar -->
+					<p:commandButton value="Salvar"
+						actionListener="#{tipoInspecaoBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+
+					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
+					<p:button outcome="tipoInspecao" value="Cancelar">
+					</p:button>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

@@ -2,8 +2,9 @@ package br.jus.tjmt.tarsius.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-
 
 @SuppressWarnings("serial")
 @Entity
@@ -14,6 +15,9 @@ public class Checklist extends GenericDomain {
 	private String versao;
 	@Column(nullable = false)
 	private Boolean situacao;
+	@ManyToOne
+	@JoinColumn(nullable = false) // Para chave estrangeira
+	private TipoInspecao tipoInspecao;
 
 	public String getNome() {
 		return nome;
@@ -37,6 +41,14 @@ public class Checklist extends GenericDomain {
 
 	public void setSituacao(Boolean situacao) {
 		this.situacao = situacao;
+	}
+
+	public TipoInspecao getTipoInspecao() {
+		return tipoInspecao;
+	}
+
+	public void setTipoInspecao(TipoInspecao tipoInspecao) {
+		this.tipoInspecao = tipoInspecao;
 	}
 
 	// Formata True / False para Ativo / Inativo

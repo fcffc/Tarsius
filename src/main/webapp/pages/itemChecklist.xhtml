@@ -49,8 +49,9 @@
 					</p:column>
 
 					<p:column headerText="Tipo"
-						sortBy="#{cursorItemChecklist.tipo.toString()}">
-						<h:outputText value="#{cursorItemChecklist.tipo.toString()}" />
+						sortBy="#{cursorItemChecklist.checklist.tipoInspecao.tipoInspecao}">
+						<h:outputText
+							value="#{cursorItemChecklist.checklist.tipoInspecao.tipoInspecao}" />
 					</p:column>>					
 
 					<p:column headerText="Situação"
@@ -101,8 +102,23 @@
 			draggable="true" resizable="true" responsive="true" modal="true"
 			minimizable="true" maximizable="true">
 			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="1">
+					
+					<p:outputLabel for="tipoInspecao"  />
+					<p:selectOneMenu id="tipoInspecao" filter="true"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Tipo de Inspeção' é obrigatório."
+						value="#{itemChecklistBean.tipoInspecao}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um tipo de inspeção" />
+						<f:selectItems value="#{itemChecklistBean.tipoInspecaos}"
+							var="cursorTipoInspecao" itemValue="#{cursorTipoInspecao}"
+							itemLabel="#{cursorTipoInspecao.tipoInspecao}" />
+						<p:ajax listener="#{itemChecklistBean.popular}"
+							update=":formCadastro:checklist" />
+					</p:selectOneMenu>
 
-				<h:panelGrid id="painel" columns="1" >
+
 					<h3 style="margin-top: 1">Checklist</h3>
 					<p:separator />
 
@@ -127,16 +143,7 @@
 							size="100" value="#{itemChecklistBean.itemChecklist.pergunta}"
 							required="true"
 							requiredMessage="O campo 'Pergunta' é obrigatório." />
-
-						<p:outputLabel for="tipo" value="Tipo:" />
-						<p:selectOneRadio id="tipo"
-							value="#{itemChecklistBean.itemChecklist.tipo}" required="true"
-							requiredMessage="O campo 'Tipo' é obrigatório.">
-							<f:selectItem itemValue="PROCESSO" itemLabel="Processo" />
-							<f:selectItem itemValue="APLICACAO" itemLabel="Aplicação" />
-						</p:selectOneRadio>
 					</h:panelGrid>
-
 
 					<h3 style="margin-top: 1">Seção</h3>
 					<p:separator />
@@ -153,8 +160,7 @@
 									<p:selectOneRadio id="secaoProc"
 										value="#{itemChecklistBean.itemChecklist.secaoProc}"
 										required="false"
-										requiredMessage="O campo 'Seção do Processo' é obrigatório."
-										disabled="#{itemChecklistBean.isRederiza}">
+										requiredMessage="O campo 'Seção do Processo' é obrigatório.">
 										<f:selectItem itemValue="ENTRADA" itemLabel="Entrada" />
 										<f:selectItem itemValue="SAIDA" itemLabel="Saída" />
 										<f:selectItem itemValue="PASSO" itemLabel="Passo" />

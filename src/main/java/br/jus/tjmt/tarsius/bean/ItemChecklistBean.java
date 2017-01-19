@@ -1,6 +1,7 @@
 package br.jus.tjmt.tarsius.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,8 +16,10 @@ import org.primefaces.event.ToggleEvent;
 
 import br.jus.tjmt.tarsius.dao.ChecklistDAO;
 import br.jus.tjmt.tarsius.dao.ItemChecklistDAO;
+import br.jus.tjmt.tarsius.dao.TipoInspecaoDAO;
 import br.jus.tjmt.tarsius.domain.Checklist;
 import br.jus.tjmt.tarsius.domain.ItemChecklist;
+import br.jus.tjmt.tarsius.domain.TipoInspecao;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -25,7 +28,9 @@ public class ItemChecklistBean implements Serializable {
 	private ItemChecklist itemChecklist;
 	private List<ItemChecklist> itemChecklists;
 	private List<Checklist> checklists;
-	private Boolean isRederiza = false; //deletar
+	// var lógica
+	private List<TipoInspecao> tipoInspecaos;
+	private TipoInspecao tipoInspecao; // armazena temporariamente o tipo
 
 	public ItemChecklist getItemChecklist() {
 		return itemChecklist;
@@ -51,12 +56,20 @@ public class ItemChecklistBean implements Serializable {
 		this.checklists = checklists;
 	}
 
-	public Boolean getIsRederiza() {
-		return isRederiza;
+	public List<TipoInspecao> getTipoInspecaos() {
+		return tipoInspecaos;
 	}
 
-	public void setIsRederiza(Boolean isRederiza) {
-		this.isRederiza = isRederiza;
+	public void setTipoInspecaos(List<TipoInspecao> tipoInspecaos) {
+		this.tipoInspecaos = tipoInspecaos;
+	}
+
+	public TipoInspecao getTipoInspecao() {
+		return tipoInspecao;
+	}
+
+	public void setTipoInspecao(TipoInspecao tipoInspecao) {
+		this.tipoInspecao = tipoInspecao;
 	}
 
 	@PostConstruct
@@ -73,9 +86,13 @@ public class ItemChecklistBean implements Serializable {
 	public void novo() {
 		try {
 			itemChecklist = new ItemChecklist();
-			// Popular a seleção de Checklist
-			ChecklistDAO checklistDAO = new ChecklistDAO();
-			checklists = checklistDAO.listar("nome"); // ordena por checklist
+			tipoInspecao = new TipoInspecao();
+			// Popular a seleção de tipo
+			TipoInspecaoDAO tipoInspecaoDAO = new TipoInspecaoDAO();
+			tipoInspecaos = tipoInspecaoDAO.listar("tipoInspecao");
+
+			// Lista de Checklist vazios
+			checklists = new ArrayList<Checklist>();
 		} catch (RuntimeException erro) {
 			// Validar a exception do banco listagem de checklist
 			Messages.addFlashGlobalError("Falha ao cadastrar um novo checklist.");
@@ -90,7 +107,11 @@ public class ItemChecklistBean implements Serializable {
 
 			// Limpa objeto
 			itemChecklist = new ItemChecklist();
-			// Recarrega a listagem de Checklist
+			tipoInspecao = new TipoInspecao();
+			TipoInspecaoDAO tipoInspecaoDAO = new TipoInspecaoDAO();
+			tipoInspecaos = tipoInspecaoDAO.listar("tipoInspecao");
+			checklists = new ArrayList<>();
+			// Recarrega a listagem de Item de Checklist e Checklist
 			ChecklistDAO checklistDAO = new ChecklistDAO();
 			checklists = checklistDAO.listar("nome");
 			itemChecklists = itemChecklistDAO.listar("pergunta");
@@ -121,7 +142,11 @@ public class ItemChecklistBean implements Serializable {
 		try {
 			// Seleciona a pergunta a ser editado
 			itemChecklist = (ItemChecklist) evento.getComponent().getAttributes().get("perguntaSelecionada");
-			// Carrega checklist
+			tipoInspecao = itemChecklist.getChecklist().getTipoInspecao();
+						
+			// Carrega checklist e tipo
+			TipoInspecaoDAO tipoInspecaoDAO = new TipoInspecaoDAO();
+			tipoInspecaos = tipoInspecaoDAO.listar("tipoInspecao");
 			ChecklistDAO checklistDAO = new ChecklistDAO();
 			checklists = checklistDAO.listar("nome");
 		} catch (RuntimeException erro) {
@@ -130,11 +155,19 @@ public class ItemChecklistBean implements Serializable {
 		}
 	}
 
-	public void renderizar() {
-		if (itemChecklist.getTipo().equals("PROCESSO")) {
-			isRederiza = true;
-		} else {
-			isRederiza = false;
+	// Popular o checklist com base no tipo selecionado
+	public void popular() {
+		try {
+			if (tipoInspecao != null) {
+				ChecklistDAO checklistDAO = new ChecklistDAO();
+				checklists = checklistDAO.buscarPorTipoInspecao(tipoInspecao.getCodigo());
+			} else {
+				// Checklist vazio
+				checklists = new ArrayList<>();
+			}
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Falha ao tentar listar os Checklist.");
+			erro.printStackTrace();
 		}
 	}
 
