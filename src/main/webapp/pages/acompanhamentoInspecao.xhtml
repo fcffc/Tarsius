@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<p:growl id="mensagem" />
+
+	<!-- Listagem de registros e ações. -->
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel>
+				<p:breadCrumb>
+					<p:menuitem style="" value="Categories" url="#" />
+					<p:menuitem title="inspecao" value="Listagem - Inspeção"
+						url="acompanhamentoInspecao.xhtml" />
+				</p:breadCrumb>
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{inspecaoBean.inspecaos}"
+					var="cursorInspecao" rows="10" style="margin-top:5px">
+					<f:facet name="footer">
+
+						<!-- Botão Novo -->
+						<p:commandButton value="Novo" icon="fa fa-plus-circle"
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{inspecaoBean.novo}"
+							update=":mensagem :formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						<!-- Botão Executar -->
+						<p:button outcome="acompanhamentoInspecao" value="Executar"
+							icon="fa fa-play-circle-o">
+						</p:button>
+					</f:facet>
+					<p:column headerText="Competência"
+						sortBy="#{cursorInspecao.competencia.descricao}">
+						<h:outputText value="#{cursorInspecao.competencia.descricao}" />
+					</p:column>
+
+					<p:column headerText="Tipo"
+						sortBy="#{cursorInspecao.tipo.tipoInspecao}">
+						<h:outputText value="#{cursorInspecao.tipo.tipoInspecao}" />
+					</p:column>
+
+					<p:column headerText="Checklist"
+						sortBy="#{cursorInspecao.checklist.nome}">
+						<h:outputText value="#{cursorInspecao.checklist.nome}" />
+					</p:column>
+
+					<p:column headerText="Total de Artefatos"
+						sortBy="#{cursorInspecao.totalArtefato}">
+						<h:outputText value="#{cursorInspecao.totalArtefato}" />
+					</p:column>
+
+					<p:column headerText="Situação"
+						sortBy="#{cursorInspecao.situacaoFormatada}">
+						<h:outputText value="#{cursorInspecao.situacaoFormatada}" />
+					</p:column>
+
+					<p:column headerText="Ações">
+						<!-- Botão Editar -->
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{inspecaoBean.editar}"
+							update=":mensagem: formCadastro:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="inspecaoSelecionada" value="#{cursorInspecao}" />
+							<!-- Reseta as mensagens de validação -->
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+
+						<!-- Botão Excluir -->
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{inspecaoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir a Inspeção?" icon="ui-icon-alert" />
+							<f:attribute name="inspecaoSelecionada" value="#{cursorInspecao}" />
+						</p:commandButton>
+
+					</p:column>
+				</p:dataTable>
+
+				<!-- Caixa de confirmação -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<!-- Campo de Cadastro -->
+		<p:dialog header="Inspeção - Cadastro" widgetVar="dialogo"
+			draggable="true" resizable="true" modal="true">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+
+					<p:outputLabel for="competencia" value="Competência: " />
+					<p:selectOneMenu id="competencia" filter="true"
+						value="#{inspecaoBean.inspecao.competencia}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Competência' é obrigatório.">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma Competência" />
+						<f:selectItems value="#{inspecaoBean.competenciaInspecaos}"
+							var="cursorCompetencia" itemValue="#{cursorCompetencia}"
+							itemLabel="#{cursorCompetencia.descricao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="tipoInspecao" value="Tipo de Inspeção: " />
+					<p:selectOneMenu id="tipoInspecao" filter="true"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Tipo de Inspeção' é obrigatório."
+						value="#{inspecaoBean.tipoInspecao}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um tipo de inspeção" />
+						<f:selectItems value="#{inspecaoBean.tipoInspecao}"
+							var="cursorTipoInspecao" itemValue="#{cursorTipoInspecao}"
+							itemLabel="#{cursorTipoInspecao.tipoInspecao}" />
+						<p:ajax listener="#{inspecaoBean.popular}"
+							update=":formCadastro:checklist" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="checklist" value="Checklist: " />
+					<p:selectOneMenu id="checklist" filter="true"
+						value="#{inspecaoBean.inspecao.checklist}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Checklist' é obrigatório.">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um Checklist" />
+						<f:selectItems value="#{inspecaoBean.checklists}"
+							var="cursorChecklist" itemValue="#{cursorChecklist}"
+							itemLabel="#{cursorChecklist.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="tartefato" value="Total Artefato: " />
+					<p:inputText id="tartefato" maxlength="100" size="20"
+						value="#{inspecaoBean.inspecao.totalArtefato}" required="true"
+						requiredMessage="O campo 'Total Artefato' é obrigatório." />
+
+					<p:outputLabel for="ativo" value="Ativo:" />
+					<p:selectBooleanCheckbox id="ativo"
+						value="#{inspecaoBean.inspecao.situacao}" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="4">
+					<!-- Botão salvar -->
+					<p:commandButton value="Salvar"
+						actionListener="#{checklistBean.salvar}" icon="fa fa-save"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+
+					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
+					<p:button outcome="acompanhamentoInspecao" icon="fa fa-ban" value="Cancelar">
+					</p:button>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
