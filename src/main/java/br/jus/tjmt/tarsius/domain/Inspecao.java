@@ -2,12 +2,10 @@ package br.jus.tjmt.tarsius.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import br.jus.tjmt.tarsius.enumeracao.TipoPergunta;
+import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
 @Entity
@@ -15,20 +13,16 @@ public class Inspecao extends GenericDomain {
 	@OneToOne
 	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
 	private CompetenciaInspecao competencia;
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private TipoPergunta tipo;
+	@ManyToOne
+	@JoinColumn(nullable = false) // Para chave estrangeira
+	private TipoInspecao tipo;
 	@OneToOne
 	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
 	private Checklist checklist;
-	@Column(nullable = false)
 	private int totalArtefato;
 	@Column(nullable = false)
 	private Boolean situacao;
-	@OneToOne
-	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
-	private ItemInspecao itemInspecao;
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String usuarioLogado;
 
 	public CompetenciaInspecao getCompetencia() {
@@ -39,11 +33,11 @@ public class Inspecao extends GenericDomain {
 		this.competencia = competencia;
 	}
 
-	public TipoPergunta getTipo() {
+	public TipoInspecao getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoPergunta tipo) {
+	public void setTipo(TipoInspecao tipo) {
 		this.tipo = tipo;
 	}
 
@@ -71,19 +65,21 @@ public class Inspecao extends GenericDomain {
 		this.situacao = situacao;
 	}
 
-	public ItemInspecao getItemInspecao() {
-		return itemInspecao;
-	}
-
-	public void setItemInspecao(ItemInspecao itemInspecao) {
-		this.itemInspecao = itemInspecao;
-	}
-
 	public String getUsuarioLogado() {
 		return usuarioLogado;
 	}
 
 	public void setUsuarioLogado(String usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
+	}
+
+	// Formata True / False para Ativo / Inativo
+	@Transient
+	public String getSituacaoFormatada() {
+		String situacaoFormatada = "Inativo";
+		if (situacao) {
+			situacaoFormatada = "Ativo";
+		}
+		return situacaoFormatada;
 	}
 }

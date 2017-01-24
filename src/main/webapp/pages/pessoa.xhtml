@@ -26,17 +26,17 @@
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-							actionListener="#{pessoaBean.novo}"
+							actionListener="#{pessoaBean.novo}" icon="fa fa-plus-circle"
 							update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Nome" sortBy="#{cursorPessoa.nome}">
+					<p:column headerText="Nome" filterBy="#{cursorPessoa.nome}" sortBy="#{cursorPessoa.nome}">
 						<h:outputText value="#{cursorPessoa.nome}" />
 					</p:column>
 
-					<p:column headerText="Matrícula" sortBy="#{cursorPessoa.matricula}">
+					<p:column headerText="Matrícula" filterBy="#{cursorPessoa.matricula}" sortBy="#{cursorPessoa.matricula}">
 						<h:outputText value="#{cursorPessoa.matricula}" />
 					</p:column>
 
@@ -44,7 +44,7 @@
 						<h:outputText value="#{cursorPessoa.celular}" />
 					</p:column>
 
-					<p:column headerText="Cargo" sortBy="#{cursorPessoa.cargo.nome}">
+					<p:column headerText="Cargo" filterBy="#{cursorPessoa.cargo.nome}" sortBy="#{cursorPessoa.cargo.nome}">
 						<h:outputText value="#{cursorPessoa.cargo.nome}" />
 					</p:column>
 
@@ -138,11 +138,11 @@
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{pessoaBean.salvar}"
+						actionListener="#{pessoaBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="pessoa" value="Cancelar">
+					<p:button outcome="pessoa" icon="fa fa-ban" value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

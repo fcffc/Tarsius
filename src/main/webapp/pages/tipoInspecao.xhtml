@@ -26,7 +26,7 @@
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" type=""
-							oncomplete="PF('dialogo').show();"
+							oncomplete="PF('dialogo').show();" icon="fa fa-plus-circle"
 							actionListener="#{tipoInspecaoBean.novo}"
 							update=":formCadastro:painel">
 							<f:actionListener
@@ -34,6 +34,7 @@
 						</p:commandButton>
 					</f:facet>
 					<p:column headerText="Tipo de Inspeção"
+						filterBy="#{cursorTipoInspecao.tipoInspecao}"
 						sortBy="#{cursorTipoInspecao.tipoInspecao}">
 						<h:outputText value="#{cursorTipoInspecao.tipoInspecao}" />
 
@@ -93,7 +94,7 @@
 
 					<p:outputLabel for="observacao" value="Observação: " />
 					<p:inputTextarea id="observacao" maxlength="100"
-						style="width: 356px; resize: none;"
+						style="width: 313px; resize: none;"
 						value="#{tipoInspecaoBean.tipoInspecao.observacao}"
 						required="false" />
 				</h:panelGrid>
@@ -101,11 +102,11 @@
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{tipoInspecaoBean.salvar}"
+						actionListener="#{tipoInspecaoBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="tipoInspecao" value="Cancelar">
+					<p:button outcome="tipoInspecao" icon="fa fa-ban" value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

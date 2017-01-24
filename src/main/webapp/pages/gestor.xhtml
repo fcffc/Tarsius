@@ -26,17 +26,19 @@
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-							actionListener="#{gestorBean.novo}"
+							actionListener="#{gestorBean.novo}" icon="fa fa-plus-circle"
 							update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Nome" sortBy="#{cursorGestor.pessoa.nome}">
+					<p:column headerText="Nome" filterBy="#{cursorGestor.pessoa.nome}"
+						sortBy="#{cursorGestor.pessoa.nome}">
 						<h:outputText value="#{cursorGestor.pessoa.nome}" />
 					</p:column>
 
 					<p:column headerText="Cargo"
+						filterBy="#{cursorGestor.pessoa.cargo.nome}"
 						sortBy="#{cursorGestor.pessoa.cargo.nome}">
 						<h:outputText value="#{cursorGestor.pessoa.cargo.nome}" />
 					</p:column>
@@ -95,11 +97,11 @@
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{gestorBean.salvar}"
+						actionListener="#{gestorBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="gestor" value="Cancelar">
+					<p:button outcome="gestor" icon="fa fa-ban" value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

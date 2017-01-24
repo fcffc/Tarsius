@@ -26,25 +26,27 @@
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" type=""
-							oncomplete="PF('dialogo').show();"
+							oncomplete="PF('dialogo').show();" icon="fa fa-plus-circle"
 							actionListener="#{tipoArtefatoBean.novo}"
 							update=":formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Sigla" sortBy="#{cursorTipoArtefato.sigla}">
+					<p:column headerText="Sigla" filterBy="#{cursorTipoArtefato.sigla}"
+						sortBy="#{cursorTipoArtefato.sigla}">
 						<h:outputText value="#{cursorTipoArtefato.sigla}" />
 					</p:column>
 
 					<p:column headerText="Descrição"
+						filterBy="#{cursorTipoArtefato.descricao}"
 						sortBy="#{cursorTipoArtefato.descricao}">
 						<h:outputText value="#{cursorTipoArtefato.descricao}" />
 					</p:column>
 
 					<p:column headerText="Ações">
-					
-					<!-- Botão Editar -->
+
+						<!-- Botão Editar -->
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{tipoArtefatoBean.editar}"
 							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
@@ -64,7 +66,7 @@
 								icon="ui-icon-alert" />
 							<f:attribute name="tipoArtefatoSelecionado"
 								value="#{cursorTipoArtefato}" />
-						</p:commandButton>						
+						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 
@@ -98,11 +100,11 @@
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{tipoArtefatoBean.salvar}"
+						actionListener="#{tipoArtefatoBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="tipoArtefato" value="Cancelar">
+					<p:button outcome="tipoArtefato" icon="fa fa-ban" value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

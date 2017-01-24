@@ -21,25 +21,18 @@
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{cargoBean.cargos}" var="cursorCargo" widgetVar="pesquisar"
-					rows="10" style="margin-top:5px">
-					<f:facet name="header">
-						<p:outputPanel>
-							<h:outputText value="Pesquisar:" style="position:relative; left:390px" />
-							<p:inputText id="globalFilter" filterBy="#{cursorCargo.nome}"
-								style="width:250px; position:relative; left:400px" placeholder="Pressione Enter" />
-						</p:outputPanel>
-					</f:facet>
+					rows="10" style="margin-top:5px">					
 					<f:facet name="footer">
 
 						<!-- Botão Novo -->
-						<p:commandButton value="Novo" type=""
+						<p:commandButton value="Novo" type="" icon="fa fa-plus-circle"
 							oncomplete="PF('dialogo').show();"
 							actionListener="#{cargoBean.novo}" update=":formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Nome" sortBy="#{cursorCargo.nome}">
+					<p:column headerText="Nome" filterBy="#{cursorCargo.nome}" sortBy="#{cursorCargo.nome}">
 						<h:outputText value="#{cursorCargo.nome}" />
 
 					</p:column>
@@ -94,18 +87,18 @@
 
 					<p:outputLabel for="observacao" value="Observação: " />
 					<p:inputTextarea id="observacao" maxlength="100"
-						style="width: 356px; resize: none;"
+						style="width: 313px; resize: none;"
 						value="#{cargoBean.cargo.observacao}" required="false" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
-					<p:commandButton value="Salvar"
+					<p:commandButton value="Salvar" icon="fa fa-save"
 						actionListener="#{cargoBean.salvar}"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="cargo" value="Cancelar">
+					<p:button outcome="cargo" icon="fa fa-ban" value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

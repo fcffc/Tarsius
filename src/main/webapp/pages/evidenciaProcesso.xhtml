@@ -21,30 +21,33 @@
 				</p:breadCrumb>
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					paginator="true" value="#{evidenciaProcessoBean.evidenciaProcessos}"
+					paginator="true"
+					value="#{evidenciaProcessoBean.evidenciaProcessos}"
 					var="cursorEvidenciaProcesso" rows="10" style="margin-top:5px">
 					<f:facet name="footer">
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 							actionListener="#{evidenciaProcessoBean.novo}"
-							update=":mensagem :formCadastro:painel">
+							icon="fa fa-plus-circle" update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
 					<p:column headerText="Artefato"
+						filterBy="#{cursorEvidenciaProcesso.artefato}"
 						sortBy="#{cursorEvidenciaProcesso.artefato}">
 						<h:outputText value="#{cursorEvidenciaProcesso.artefato}" />
 					</p:column>
-					
+
 					<p:column headerText="Tipo"
+						filterBy="#{cursorEvidenciaProcesso.tipo.sigla}"
 						sortBy="#{cursorEvidenciaProcesso.tipo.sigla}">
-						<h:outputText
-							value="#{cursorEvidenciaProcesso.tipo.sigla}" />
+						<h:outputText value="#{cursorEvidenciaProcesso.tipo.sigla}" />
 					</p:column>
 
 					<p:column headerText="Competência"
+						filterBy="#{cursorEvidenciaProcesso.competencia.descricao}"
 						sortBy="#{cursorEvidenciaProcesso.competencia.descricao}">
 						<h:outputText
 							value="#{cursorEvidenciaProcesso.competencia.descricao}" />
@@ -103,7 +106,7 @@
 						value="#{evidenciaProcessoBean.evidenciaProcesso.artefato}"
 						required="true"
 						requiredMessage="O campo 'Artefato' é obrigatório." />
-						
+
 					<p:outputLabel for="tipo" value="Tipo: " />
 					<p:selectOneMenu id="tipo" filter="true"
 						value="#{evidenciaProcessoBean.evidenciaProcesso.tipo}"
@@ -111,8 +114,7 @@
 						requiredMessage="O campo 'Tipo' é obrigatório.">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um tipo" />
-						<f:selectItems
-							value="#{evidenciaProcessoBean.tipoArtefatos}"
+						<f:selectItems value="#{evidenciaProcessoBean.tipoArtefatos}"
 							var="cursorTipo" itemValue="#{cursorTipo}"
 							itemLabel="#{cursorTipo.sigla}" />
 					</p:selectOneMenu>
@@ -135,11 +137,12 @@
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{evidenciaProcessoBean.salvar}"
+						actionListener="#{evidenciaProcessoBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="evidenciaProcesso" value="Cancelar">
+					<p:button outcome="evidenciaProcesso" icon="fa fa-ban"
+						value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

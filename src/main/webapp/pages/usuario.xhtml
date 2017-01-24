@@ -15,8 +15,8 @@
 			<p:panel>
 				<p:breadCrumb>
 					<p:menuitem style="" value="Categories" url="#" />
-					<p:menuitem title="Configurar Usuários" value="Execução da Inspeção"
-						url="usuario.xhtml" />
+					<p:menuitem title="Configurar Usuários"
+						value="Execução da Inspeção" url="usuario.xhtml" />
 				</p:breadCrumb>
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
@@ -26,17 +26,19 @@
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-							actionListener="#{usuarioBean.novo}"
+							actionListener="#{usuarioBean.novo}" icon="fa fa-plus-circle"
 							update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Nome" sortBy="#{cursorUsuario.pessoa.nome}">
+					<p:column headerText="Nome" filterBy="#{cursorUsuario.pessoa.nome}"
+						sortBy="#{cursorUsuario.pessoa.nome}">
 						<h:outputText value="#{cursorUsuario.pessoa.nome}" />
 					</p:column>
 
 					<p:column headerText="Papel"
+						filterBy="#{cursorUsuario.papel.toString()}"
 						sortBy="#{cursorUsuario.papel.toString()}">
 						<h:outputText value="#{cursorUsuario.papel.toString()}" />
 					</p:column>
@@ -110,9 +112,8 @@
 					</p:password>
 
 					<p:outputLabel for="papel" value="Papel:" />
-					<p:selectOneRadio id="papel"
-						value="#{usuarioBean.usuario.papel}" required="true"
-						requiredMessage="O campo 'Papel' é obrigatório.">
+					<p:selectOneRadio id="papel" value="#{usuarioBean.usuario.papel}"
+						required="true" requiredMessage="O campo 'Papel' é obrigatório.">
 						<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador" />
 						<f:selectItem itemValue="GESTOR" itemLabel="Gestor" />
 						<f:selectItem itemValue="INSPETOR" itemLabel="Inspetor" />
@@ -127,11 +128,11 @@
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{usuarioBean.salvar}"
+						actionListener="#{usuarioBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="usuario" value="Cancelar">
+					<p:button outcome="usuario" icon="fa fa-ban" value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

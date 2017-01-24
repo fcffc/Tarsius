@@ -26,14 +26,15 @@
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" type=""
-							oncomplete="PF('dialogo').show();"
+							oncomplete="PF('dialogo').show();" icon="fa fa-plus-circle"
 							actionListener="#{nomenclaturaBean.novo()}"
 							update=":formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Sigla" sortBy="#{cursorNomenclatura.sigla}">
+					<p:column headerText="Sigla" filterBy="#{cursorNomenclatura.sigla}"
+						sortBy="#{cursorNomenclatura.sigla}">
 						<h:outputText value="#{cursorNomenclatura.sigla}" />
 					</p:column>
 
@@ -54,7 +55,7 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
-						
+
 						<!-- Botão Excluir -->
 						<p:commandButton icon="ui-icon-trash"
 							actionListener="#{nomenclaturaBean.excluir}"
@@ -97,11 +98,11 @@
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{nomenclaturaBean.salvar}"
+						actionListener="#{nomenclaturaBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="nomenclatura" value="Cancelar">
+					<p:button outcome="nomenclatura" icon="fa fa-ban" value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

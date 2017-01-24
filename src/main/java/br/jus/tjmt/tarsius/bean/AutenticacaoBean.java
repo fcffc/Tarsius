@@ -45,7 +45,8 @@ public class AutenticacaoBean {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			usuarioLogado = usuarioDAO.autenticar(usuario.getPessoa().getMatricula(), usuario.getSenha());
-
+			Messages.addGlobalInfo("Seja bem vindo(a): "+ usuario.getPessoa());
+			
 			if (usuarioLogado == null) {
 				Messages.addGlobalError("Matrícula e/ou senha incorreto");
 				return;

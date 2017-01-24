@@ -28,9 +28,9 @@
 					<f:facet name="left">
 						<p:outputLabel
 							value="Usuário: #{autenticacaoBean.usuarioLogado.pessoa.nome}"
-							style="position: relative;left: 1000px;" />
-						<p:commandButton value="Sair"
-							style="height:28px;width:90px; text-align:center;position: relative;left: 1010px;" />
+							style="position: relative;left: 1215px;" />
+						<p:commandButton value="Sair" icon="fa fa-lock"
+							style="height:28px;width:90px; text-align:center;position: relative;left: 1225px;" />
 					</f:facet>
 				</p:toolbar>
 			</h:form>
@@ -69,7 +69,8 @@
 									<p:menuitem value="Pessoa" icon="fa fa-male" url="pessoa.xhtml" />
 								</p:submenu>
 								<p:submenu label="Inspeção">
-									<p:menuitem value="Acompanhamento" icon="fa fa-eye" />
+									<p:menuitem value="Acompanhamento"
+										url="acompanhamentoInspecao.xhtml" icon="fa fa-eye" />
 									<p:menuitem value="Execução" icon="fa fa-play-circle-o" />
 								</p:submenu>
 								<p:separator />

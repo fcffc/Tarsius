@@ -44,6 +44,7 @@
 
 		<!-- Com Chave Estrangeira -->
 		<mapping class="br.jus.tjmt.tarsius.domain.Checklist" />
+		<mapping class="br.jus.tjmt.tarsius.domain.EvidenciaPergunta" />
 		<mapping class="br.jus.tjmt.tarsius.domain.EvidenciaProcesso" />
 		<mapping class="br.jus.tjmt.tarsius.domain.EvidenciaSistema" />
 		<mapping class="br.jus.tjmt.tarsius.domain.Fluxo" />
@@ -52,6 +53,7 @@
 		<mapping class="br.jus.tjmt.tarsius.domain.ItemChecklist" />
 		<mapping class="br.jus.tjmt.tarsius.domain.ItemInspecao" />
 		<mapping class="br.jus.tjmt.tarsius.domain.Pessoa" />
+		<mapping class="br.jus.tjmt.tarsius.domain.ResultadoPergunta" />
 		<mapping class="br.jus.tjmt.tarsius.domain.Usuario" />
 	</session-factory>
 </hibernate-configuration>

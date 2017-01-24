@@ -26,18 +26,18 @@
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" type=""
-							oncomplete="PF('dialogo').show();"
+							oncomplete="PF('dialogo').show();" icon="fa fa-plus-circle"
 							actionListener="#{sistemaBean.novo}"
 							update=":formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Sigla" sortBy="#{cursorSistema.sigla}">
+					<p:column headerText="Sigla" filterBy="#{cursorSistema.sigla}" sortBy="#{cursorSistema.sigla}" >
 						<h:outputText value="#{cursorSistema.sigla}" />
 					</p:column>
 
-					<p:column headerText="Descrição"
+					<p:column headerText="Descrição" filterBy="#{cursorSistema.descricao}"
 						sortBy="#{cursorSistema.descricao}">
 						<h:outputText value="#{cursorSistema.descricao}" />
 
@@ -97,18 +97,18 @@
 
 					<p:outputLabel for="observacao" value="Observação: " />
 					<p:inputTextarea id="observacao" maxlength="100"
-						style="width: 356px; resize: none;"
+						style="width: 313px; resize: none;"
 						value="#{sistemaBean.sistema.observacao}" required="false" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{sistemaBean.salvar}"
+						actionListener="#{sistemaBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="sistema" value="Cancelar">
+					<p:button outcome="sistema" icon="fa fa-ban" value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

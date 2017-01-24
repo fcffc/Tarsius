@@ -28,22 +28,25 @@
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 							actionListener="#{evidenciaSistemaBean.novo}"
-							update=":mensagem :formCadastro:painel">
+							icon="fa fa-plus-circle" update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
 					</f:facet>
 					<p:column headerText="Funcionalidade"
+						filterBy="#{cursorEvidenciaSistema.funcionalidade}"
 						sortBy="#{cursorEvidenciaSistema.funcionalidade}">
 						<h:outputText value="#{cursorEvidenciaSistema.funcionalidade}" />
 					</p:column>
 
 					<p:column headerText="Aplicação"
+						filterBy="#{cursorEvidenciaSistema.aplicacao.sigla}"
 						sortBy="#{cursorEvidenciaSistema.aplicacao.sigla}">
 						<h:outputText value="#{cursorEvidenciaSistema.aplicacao.sigla}" />
 					</p:column>
 
 					<p:column headerText="Competência"
+						filterBy="#{cursorEvidenciaSistema.competencia.descricao}"
 						sortBy="#{cursorEvidenciaSistema.competencia.descricao}">
 						<h:outputText
 							value="#{cursorEvidenciaSistema.competencia.descricao}" />
@@ -133,11 +136,12 @@
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{evidenciaSistemaBean.salvar}"
+						actionListener="#{evidenciaSistemaBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="evidenciaSistema" value="Cancelar">
+					<p:button outcome="evidenciaSistema" icon="fa fa-ban"
+						value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

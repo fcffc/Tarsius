@@ -15,68 +15,34 @@
 </h:head>
 <h:body>
 	<p:layout fullPage="true">
-		<p:layoutUnit position="north" size="auto"
+		<p:layoutUnit position="north" size="232"
 			header="Controle e Gestão de Inspeção" resizable="false"
-			closable="false" collapsible="true">
+			closable="false" collapsible="false">
 			<div id="topo">
 				<p:graphicImage library="images" name="banner.png"
 					styleClass="imagemCentralizada" />
 			</div>
+			<h:form>
+				<p:toolbar style="height:auto;">
+					<f:facet name="left">
+						<p:outputLabel
+							value="Usuário: #{autenticacaoBean.usuarioLogado.pessoa.nome}"
+							style="position: relative;left: 1325px;" />
+						<p:commandButton value="Logar" icon="fa fa-unlock-alt"
+							style="height:28px;width:90px; text-align:center;position: relative;left: 1335px;" />
+					</f:facet>
+				</p:toolbar>
+			</h:form>
 		</p:layoutUnit>
 
-		<p:layoutUnit position="south" size="40" header="By Fernanda Ferreira" resizable="true"
-			closable="false" collapsible="true">
+		<p:layoutUnit position="south" size="40" style="text-align:center"
+			header="© Copyright 2016-2017 - Sistema de Controle e Gestão de Inspeção e Validação (Fernanda Ferreira)"
+			resizable="true" closable="false" collapsible="true">
 			<h:outputText value="" />
 		</p:layoutUnit>
 
-		<p:layoutUnit position="west" size="200" header="Menu Principal"
-			resizable="true" closable="false" collapsible="true">
-			<p:panelMenu>
-				<p:submenu label="Tarsius" url="inicial.xhtml">
-					<p:menuitem value="Inicial" icon="fa fa-database"
-						url="inicial.xhtml" />
-				</p:submenu>
-				<p:submenu label="Gerenciar">
-					<p:menuitem value="Sistema" icon="fa fa-database"
-						url="sistema.xhtml" />
-					<p:menuitem value="Cargo" icon="fa fa-user-md" url="cargo.xhtml" />
-					<p:menuitem value="Checklist" icon="fa fa-list-ol" url="#" />
-					<p:menuitem value="Comp. Inspeção" icon="fa fa-calendar"
-						url="competenciaInspecao.xhtml" />
-					<p:menuitem value="Fluxo" icon="fa fa-retweet" url="fluxo.xhtml" />
-					<p:menuitem value="Processo" icon="fa fa-sitemap"
-						url="processo.xhtml" />
-					<p:menuitem value="Gestor" icon="fa fa-user-secret"
-						url="gestor.xhtml" />
-					<p:menuitem value="Pessoa" icon="fa fa-male" url="pessoa.xhtml" />
-				</p:submenu>
-				<p:separator />
-				<p:submenu label="Inspeção">
-					<p:menuitem value="Acompanhamento" icon="fa fa-eye" url="#" />
-					<p:menuitem value="Execução" icon="fa fa-play-circle-o" url="#" />
-				</p:submenu>
-				<p:separator />
-				<p:submenu label="Evidência">
-					<p:menuitem value="Artefatos" url="#" icon="fa fa-file-text" />
-					<p:menuitem value="Funcionalidade" url="#" icon="fa fa-laptop" />
-				</p:submenu>
-				<p:separator />
-				<p:submenu label="Relatórios"></p:submenu>
-				<p:separator />
-				<p:submenu label="Configuração">
-					<p:menuitem value="Board" url="#" icon="fa fa-tachometer" />
-					<p:menuitem value="Nomenclatura" url="nomenclatura.xhtml"
-						icon="fa fa-text-width" />
-					<p:menuitem value="Notificação" url="#" icon="fa fa-paper-plane" />
-					<p:menuitem value="Tipo Artefato" url="tipoArtefato.xhtml"
-						icon="fa fa-files-o" />
-					<p:menuitem value="Usuário" url="#" icon="fa fa-users" />
-				</p:submenu>
-			</p:panelMenu>
-		</p:layoutUnit>
-
-		<p:layoutUnit position="center" header="Teste" resizable="true"
-			closable="false" collapsible="true">
+		<p:layoutUnit position="center" header="Logar no sistema Tarsius"
+			resizable="true" closable="false" collapsible="false">
 			<ui:insert name="conteudo" />
 		</p:layoutUnit>
 	</p:layout>
