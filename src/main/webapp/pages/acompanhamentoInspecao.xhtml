@@ -43,8 +43,9 @@
 					</p:column>
 
 					<p:column headerText="Tipo"
-						sortBy="#{cursorInspecao.tipo.tipoInspecao}">
-						<h:outputText value="#{cursorInspecao.tipo.tipoInspecao}" />
+						sortBy="#{cursorInspecao.checklist.tipoInspecao.tipoInspecao}">
+						<h:outputText
+							value="#{cursorInspecao.checklist.tipoInspecao.tipoInspecao}" />
 					</p:column>
 
 					<p:column headerText="Checklist"
@@ -57,7 +58,7 @@
 						<h:outputText value="#{cursorInspecao.totalArtefato}" />
 					</p:column>
 
-					<p:column headerText="Situação"
+					<p:column headerText="Status"
 						sortBy="#{cursorInspecao.situacaoFormatada}">
 						<h:outputText value="#{cursorInspecao.situacaoFormatada}" />
 					</p:column>
@@ -121,7 +122,7 @@
 						value="#{inspecaoBean.tipoInspecao}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um tipo de inspeção" />
-						<f:selectItems value="#{inspecaoBean.tipoInspecao}"
+						<f:selectItems value="#{inspecaoBean.tipoInspecaos}"
 							var="cursorTipoInspecao" itemValue="#{cursorTipoInspecao}"
 							itemLabel="#{cursorTipoInspecao.tipoInspecao}" />
 						<p:ajax listener="#{inspecaoBean.popular}"
@@ -141,11 +142,15 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel for="tartefato" value="Total Artefato: " />
-					<p:inputText id="tartefato" maxlength="100" size="20"
-						value="#{inspecaoBean.inspecao.totalArtefato}" required="true"
-						requiredMessage="O campo 'Total Artefato' é obrigatório." />
+					<p:inputText id="tartefato" maxlength="5" size="10"
+						value="#{inspecaoBean.inspecao.totalArtefato}" required="false"
+						requiredMessage="O campo 'Total Artefato' é obrigatório."
+						converterMessage="Informe um valor válido para o campo 'Total Artefato'"
+						validatorMessage="Informe um valor entre 0 e 2000, para o campo 'Total Artefato'">
+						<f:validateLongRange minimum="0" maximum="2000" />
+					</p:inputText>
 
-					<p:outputLabel for="ativo" value="Ativo:" />
+					<p:outputLabel for="ativo" value="Concluído:" />
 					<p:selectBooleanCheckbox id="ativo"
 						value="#{inspecaoBean.inspecao.situacao}" />
 
@@ -154,11 +159,12 @@
 				<h:panelGrid columns="4">
 					<!-- Botão salvar -->
 					<p:commandButton value="Salvar"
-						actionListener="#{checklistBean.salvar}" icon="fa fa-save"
+						actionListener="#{inspecaoBean.salvar}" icon="fa fa-save"
 						update=":mensagem :formCadastro:painel :formListagem:tabela" />
 
 					<!-- Botão Cancelar oncomplete="PF('dialogo').hide(); -->
-					<p:button outcome="acompanhamentoInspecao" icon="fa fa-ban" value="Cancelar">
+					<p:button outcome="acompanhamentoInspecao" icon="fa fa-ban"
+						value="Cancelar">
 					</p:button>
 				</h:panelGrid>
 			</h:form>

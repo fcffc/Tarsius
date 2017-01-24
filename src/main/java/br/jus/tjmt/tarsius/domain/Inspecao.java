@@ -3,7 +3,6 @@ package br.jus.tjmt.tarsius.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -13,16 +12,12 @@ public class Inspecao extends GenericDomain {
 	@OneToOne
 	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
 	private CompetenciaInspecao competencia;
-	@ManyToOne
-	@JoinColumn(nullable = false) // Para chave estrangeira
-	private TipoInspecao tipo;
 	@OneToOne
 	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
 	private Checklist checklist;
-	private int totalArtefato;
+	private Short totalArtefato;
 	@Column(nullable = false)
 	private Boolean situacao;
-	@Column(nullable = true)
 	private String usuarioLogado;
 
 	public CompetenciaInspecao getCompetencia() {
@@ -33,14 +28,6 @@ public class Inspecao extends GenericDomain {
 		this.competencia = competencia;
 	}
 
-	public TipoInspecao getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoInspecao tipo) {
-		this.tipo = tipo;
-	}
-
 	public Checklist getChecklist() {
 		return checklist;
 	}
@@ -49,11 +36,11 @@ public class Inspecao extends GenericDomain {
 		this.checklist = checklist;
 	}
 
-	public int getTotalArtefato() {
+	public Short getTotalArtefato() {
 		return totalArtefato;
 	}
 
-	public void setTotalArtefato(int totalArtefato) {
+	public void setTotalArtefato(Short totalArtefato) {
 		this.totalArtefato = totalArtefato;
 	}
 
@@ -76,9 +63,9 @@ public class Inspecao extends GenericDomain {
 	// Formata True / False para Ativo / Inativo
 	@Transient
 	public String getSituacaoFormatada() {
-		String situacaoFormatada = "Inativo";
+		String situacaoFormatada = "Em execução";
 		if (situacao) {
-			situacaoFormatada = "Ativo";
+			situacaoFormatada = "Concluído";
 		}
 		return situacaoFormatada;
 	}

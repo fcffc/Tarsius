@@ -28,8 +28,9 @@ public class InspecaoBean implements Serializable {
 	private List<Inspecao> inspecaos;
 	private List<Checklist> checklists;
 	private List<CompetenciaInspecao> competenciaInspecaos;
-	private List<TipoInspecao> tipoInspecaos;
+	// var lógica
 
+	private List<TipoInspecao> tipoInspecaos;
 	private TipoInspecao tipoInspecao; // armazena temporariamente o tipo
 
 	public Inspecao getInspecao() {
@@ -100,8 +101,7 @@ public class InspecaoBean implements Serializable {
 			CompetenciaInspecaoDAO competenciaInspecaoDAO = new CompetenciaInspecaoDAO();
 			competenciaInspecaos = competenciaInspecaoDAO.listar("descricao");
 			TipoInspecaoDAO tipoInspecaoDAO = new TipoInspecaoDAO();
-			tipoInspecaos = tipoInspecaoDAO.listar("tipoInspecao");// Ordena por
-																	// tipo
+			tipoInspecaos = tipoInspecaoDAO.listar();// Ordena por tipo
 			// Lista de Checklist vazios
 			checklists = new ArrayList<Checklist>();
 		} catch (RuntimeException erro) {
@@ -119,12 +119,12 @@ public class InspecaoBean implements Serializable {
 			// Limpar o objeto
 			inspecao = new Inspecao();
 			tipoInspecao = new TipoInspecao();
-			checklists = new ArrayList<>();
-			// Recarrega a listagem de checklist e tipos
 			CompetenciaInspecaoDAO competenciaInspecaoDAO = new CompetenciaInspecaoDAO();
 			competenciaInspecaos = competenciaInspecaoDAO.listar("descricao");
 			TipoInspecaoDAO tipoInspecaoDAO = new TipoInspecaoDAO();
 			tipoInspecaos = tipoInspecaoDAO.listar("tipoInspecao");
+			checklists = new ArrayList<>();
+			// Recarrega a listagem de checklist e tipos
 			ChecklistDAO checklistDAO = new ChecklistDAO();
 			checklists = checklistDAO.listar("nome");
 			inspecaos = inspecaoDAO.listar("competencia");
@@ -156,8 +156,8 @@ public class InspecaoBean implements Serializable {
 		try {
 			// Seleciona a inspeção a ser editado
 			inspecao = (Inspecao) evento.getComponent().getAttributes().get("inspecaoSelecionada");
-			// ver esse erro ->tipoInspecao =
-			// inspecao.getTipo().getTipoInspecao();
+			tipoInspecao = inspecao.getChecklist().getTipoInspecao();
+			
 			// Carrega o Competencia, tipo e checklist
 			CompetenciaInspecaoDAO competenciaInspecaoDAO = new CompetenciaInspecaoDAO();
 			competenciaInspecaos = competenciaInspecaoDAO.listar("descricao");
