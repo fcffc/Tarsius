@@ -118,6 +118,32 @@
 							itemValue="#{cursorTipoInspecao}"
 							itemLabel="#{cursorTipoInspecao.tipoInspecao}" />
 					</p:selectOneMenu>
+					
+					<p:outputLabel for="processo" value="Processo: "  />
+					<p:selectOneMenu id="processo" filter="true"
+						converter="omnifaces.SelectItemsConverter" required="false"
+						requiredMessage="O campo 'Processo' é obrigatório."
+						value="#{checklistBean.processo}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um processo" />
+						<f:selectItems value="#{checklistBean.processos}"
+							var="cursorProcesso" itemValue="#{cursorProcesso}"
+							itemLabel="#{cursorProcesso.nome}" />
+						<p:ajax listener="#{checklistBean.popular}"
+							update=":formCadastro:fluxo" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="fluxo" value="Fluxo: " />
+					<p:selectOneMenu id="fluxo" filter="true"
+						value="#{checklistBean.checklist.fluxo}"
+						converter="omnifaces.SelectItemsConverter" required="false"
+						requiredMessage="O campo 'Fluxo' é obrigatório.">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um Fluxo" />
+						<f:selectItems value="#{checklistBean.fluxos}"
+							var="cursorFluxo" itemValue="#{cursorFluxo}"
+							itemLabel="#{cursorFluxo.nome}" />
+					</p:selectOneMenu>
 
 					<p:outputLabel for="situacao" value="Ativo:" />
 					<p:selectBooleanCheckbox id="situacao"

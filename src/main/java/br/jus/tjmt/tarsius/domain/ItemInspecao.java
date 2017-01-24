@@ -17,6 +17,9 @@ public class ItemInspecao extends GenericDomain {
 	@OneToOne
 	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
 	private Gestor gestor;
+	@OneToOne
+	@JoinColumn(nullable = false) // Para chave estrangeira não nulo
+	private Sistema sistema;
 
 	public Inspecao getInspecao() {
 		return inspecao;
@@ -40,5 +43,13 @@ public class ItemInspecao extends GenericDomain {
 
 	public void setGestor(Gestor gestor) {
 		this.gestor = gestor;
+	}
+
+	public Sistema getSistema() {
+		return sistema;
+	}
+
+	public void setSistema(Sistema sistema) {
+		this.sistema = sistema;
 	}
 }

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
@@ -15,6 +16,8 @@ public class Checklist extends GenericDomain {
 	private String versao;
 	@Column(nullable = false)
 	private Boolean situacao;
+	@OneToOne
+	private Fluxo fluxo;
 	@ManyToOne
 	@JoinColumn(nullable = false) // Para chave estrangeira
 	private TipoInspecao tipoInspecao;
@@ -41,6 +44,14 @@ public class Checklist extends GenericDomain {
 
 	public void setSituacao(Boolean situacao) {
 		this.situacao = situacao;
+	}
+
+	public Fluxo getFluxo() {
+		return fluxo;
+	}
+
+	public void setFluxo(Fluxo fluxo) {
+		this.fluxo = fluxo;
 	}
 
 	public TipoInspecao getTipoInspecao() {
