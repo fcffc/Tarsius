@@ -16,7 +16,7 @@
 <h:body>
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north" size="232"
-			header="Controle e Gestão de Inspeção" resizable="false"
+			header="Controle e Gestão de Inspeção e Validação" resizable="false"
 			closable="false" collapsible="false">
 			<div id="topo">
 				<p:graphicImage library="images" name="banner.png"
@@ -26,10 +26,10 @@
 				<p:toolbar style="height:auto;">
 					<f:facet name="left">
 						<p:outputLabel
-							value="Usuário: #{autenticacaoBean.usuarioLogado.pessoa.nome}"
+							value="Usuário: "
 							style="position: relative;left: 1325px;" />
-						<p:commandButton value="Logar" icon="fa fa-unlock-alt"
-							style="height:28px;width:90px; text-align:center;position: relative;left: 1335px;" />
+						<p:button value="Logar" icon="fa fa-unlock-alt" outcome="itemChecklist"
+							style="height:28px;width:90px; text-align:center;position: relative;left: 1395px;" />
 					</f:facet>
 				</p:toolbar>
 			</h:form>

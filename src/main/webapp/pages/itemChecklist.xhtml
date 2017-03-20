@@ -21,13 +21,13 @@
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{itemChecklistBean.itemChecklists}"
-					var="cursorItemChecklist" rows="10" style="margin-top:5px">
+					var="cursorItemChecklist" rows="3" style="margin-top:5px">
 					<f:facet name="footer">
 
 						<!-- Botão Novo -->
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-							actionListener="#{itemChecklistBean.novo}" icon="fa fa-plus-circle"
-							update=":mensagem :formCadastro:painel">
+							actionListener="#{itemChecklistBean.novo}"
+							icon="fa fa-plus-circle" update=":mensagem :formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
@@ -38,12 +38,14 @@
 						</p:button>
 					</f:facet>
 
-					<p:column headerText="Checklist" filterBy="#{cursorItemChecklist.checklist.nome}"
+					<p:column headerText="Checklist"
+						filterBy="#{cursorItemChecklist.checklist.nome}"
 						sortBy="#{cursorItemChecklist.checklist.nome}">
 						<h:outputText value="#{cursorItemChecklist.checklist.nome}" />
 					</p:column>
 
-					<p:column headerText="Pergunta" filterBy="#{cursorItemChecklist.pergunta}"
+					<p:column headerText="Pergunta"
+						filterBy="#{cursorItemChecklist.pergunta}"
 						sortBy="#{cursorItemChecklist.pergunta}">
 						<h:outputText value="#{cursorItemChecklist.pergunta}" />
 					</p:column>
@@ -103,8 +105,8 @@
 			minimizable="true" maximizable="true">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="1">
-					
-					<p:outputLabel for="tipoInspecao"  />
+
+					<p:outputLabel for="tipoInspecao" />
 					<p:selectOneMenu id="tipoInspecao" filter="true"
 						converter="omnifaces.SelectItemsConverter" required="true"
 						requiredMessage="O campo 'Tipo de Inspeção' é obrigatório."
@@ -137,8 +139,54 @@
 					<h3 style="margin-top: 1">Perguntas</h3>
 					<p:separator />
 
+					<h:form>
+						<h3 style="margin-top: 0">Basic</h3>
+						
+						<p:editor widgetVar="editor1" value="#{editorView.text}"
+							height="300" style="margin-bottom:10px" />
+
+						<p:commandButton value="Salvar" update="display"
+							oncomplete="PF('dlg').show()" icon="fa fa-unlock" />
+						<p:commandButton value="Concluir" type="button"
+							onclick="PF('editor1').clear();" icon="fa fa-lock" />
+
+						<h3 class="first">Custom Toolbar</h3>
+						<p:editor widgetVar="editor2" value="#{itemChecklistBean.itemChecklist.pergunta}"
+							height="300" style="margin-bottom:10px"
+							placeholder="Enter your content">
+							<f:facet name="toolbar">
+								<span class="ql-formats">
+									<button class="ql-bold"></button>
+									<button class="ql-italic"></button>
+									<button class="ql-underline"></button>
+									<button class="ql-strike"></button>
+								</span>
+								<span class="ql-formats"> <select class="ql-font"></select>
+									<select class="ql-size"></select>
+								</span>
+							</f:facet>
+						</p:editor>
+
+						<p:commandButton value="Submit" update="display"
+							oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
+						<p:commandButton value="Clear" type="button"
+							onclick="PF('editor2').clear();" icon="ui-icon-close" />
+
+						<p:dialog header="Content" widgetVar="dlg" showEffect="fade"
+							hideEffect="fade">
+							<p:outputPanel id="display">
+								<h3 style="margin-top: 0">Basic</h3>
+								<h:outputText value="#{itemChecklistBean.itemChecklist.pergunta}" escape="false" />
+
+								<h3>Custom</h3>
+								<h:outputText value="#{itemChecklistBean.itemChecklist.pergunta}" escape="false" />
+							</p:outputPanel>
+						</p:dialog>
+					</h:form>
+
 					<h:panelGrid id="painel1" columns="2" cellpadding="1">
 						<p:outputLabel for="pergunta" value="Item checklist: " />
+
 						<p:inputTextarea rows="1" cols="83" id="pergunta" maxlength="250"
 							size="100" value="#{itemChecklistBean.itemChecklist.pergunta}"
 							required="true"

@@ -10,7 +10,10 @@
 	
 	<p:growl id="mensagem" showDetail="true"/>
 	<ui:define name="conteudo">		
-		 <div style="height:200; width:100%; "> 
+		 <div style="height:400; width:100%; "> 
+		 <p:dialog header="Perguntas - Cadastro" widgetVar="dialogo"
+			draggable="true" resizable="true" responsive="true" modal="true"
+			minimizable="true" maximizable="true"></p:dialog>
 			<h:form >	
 			
 				<p:dashboard id="board" model="#{dashboardView.model}">
@@ -18,11 +21,32 @@
 						update="mensagem"  />
 
 					<p:panel  id="sports" header="5">
-						<h:outputText value="Checklist Cadastrados" />
+						<h:outputText value="Inspeções em andamento" />
 					</p:panel>
 
-					<p:panel id="finance" header="10">
-						<h:outputText value="Task em andamento" />
+					<p:panel id="finance" header="1">
+						<h:outputText value="Inspeções Finalizadas" />
+					</p:panel>
+					<p:panel id="finance1" header="1">
+						<h:outputText value="Não conformidade Tipo: NC1" />
+					</p:panel>
+					
+					<p:panel id="lifestyle" header="3">
+						<h:outputText value="Não conformidade Tipo: NC2" />
+					</p:panel>
+					
+					<p:panel id="weather" header="5">
+						<h:outputText value="Não conformidade Tipo: NC3" />
+					</p:panel>
+					<p:panel id="weather1s" header="5">
+						<h:outputText value="Não conformidade Tipo: NC4" />
+					</p:panel>
+					
+					<p:panel id="NC" header="7">
+						<h:outputText value="Não conformidade Tipo: NC4" />
+					</p:panel>
+					<p:panel id="politics1" header="7">
+						<h:outputText value="Total de Checklist " />
 					</p:panel>
 
 				</p:dashboard>
